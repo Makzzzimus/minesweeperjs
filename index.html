@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Minesweeper</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.svg">
 </head>
-<body>
+<body id="body">
     <div id="Display">
         <div id="TopBar">
             <div id="MinesLayer" class="BottomLayer">
@@ -14,7 +15,7 @@
                 <span id="MineCounter" class="Counters">10</span>
             </div>
     
-            <span id="Status">Minesweeper</span>
+            <span id="Status" onclick="statusClick(this)">Minesweeper</span>
     
             <div id="TimeLayer" class="BottomLayer">
                 <span class="Icons">⏱</span>
@@ -156,8 +157,19 @@
                 <input type="checkbox" checked id="AnimationsCheckbox" onclick="isAnimationsEnabledSwitch(this)">
                 <label>Animations</label>
             </div>
+            <div>
+                <input type="checkbox" checked id="BackgroundCheckbox" onclick="isDynamicBackroundEnabledSwitch(this)">
+                <label>Dynamic backround</label>
+            </div>
+            <button onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
+            <div style="margin-top: 15px; display: none;" class="BottomLayer" id="HighScoreLayer">
+                <span style="font-size: 16pt;">🏆</span>
+                <span id="HighScoreCounter" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16pt;">999</span>
+            </div>
         </fieldset>
     </div>
+    
     <script src="script.js"></script>
+    <script src="bgcollist.js"></script>
 </body>
 </html>

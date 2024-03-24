@@ -1,7 +1,4 @@
-- Change colors on win/lose
-
-- Make first click safe
-
 (ideas)
-- High score bar(understan how cookies work)
+- replace dynamic bg colors wih dynamic gradient(canvas)
 
+- change favicon depending on game status

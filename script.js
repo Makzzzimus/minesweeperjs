@@ -2,22 +2,47 @@ let minesLocation = [];
 let flagsLeft = document.getElementById("MineCounter");
 let statusBar = document.getElementById("Status");
 let timer = document.getElementById("TimeCounter");
+let highScoreCounterr = document.getElementById("HighScoreCounter");
 let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
+let firstClick = true;
 let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
+let lastBgColor = "";
 
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
 
+function getHighScore(){
+    if (document.cookie != ""){
+        let highscore = "";
+        for (i=3; i<document.cookie.length; i++){
+            highscore = highscore + document.cookie[i];
+        }
+        highScoreCounterr.innerHTML = highscore;
+    }
+}
+function showHighScore(t){
+    t.remove();
+    document.getElementById("HighScoreLayer").style.display = "";
+}
 function isOpeningEnabledSwitch(t){
     if (t.checked == false){
         openingEnabled = false;
     }
     else{
         openingEnabled = true;
+    }
+}
+function isDynamicBackroundEnabledSwitch(t){
+    if (t.checked == false){
+        lastBgColor = body.style.background;
+        body.style.background = "black";
+    }
+    else{
+        body.style.background = lastBgColor;
     }
 }
 function isAnimationsEnabledSwitch(t){
@@ -43,24 +68,40 @@ function openCell(t){
         if (t.innerHTML !== "🚩"){
             t.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
             t.style.background = OPENED_CELL_COLOR;
-            for (let i=0; i<10; i++){
-                if (t.id == minesLocation[i]){
-                    isGameOver = true;
-                    t.innerHTML = "💣";
-                    statusBar.innerHTML = "Game Over!"
-                    for (let i=500; i<3500; i=i+1000){
-                        setTimeout(()=>{statusBar.style.color = "red";}, i);
-                        setTimeout(()=>{statusBar.style.color = "black";}, i+500);
+            if (firstClick == false){
+                for (let i=0; i<10; i++){
+                    if (t.id == minesLocation[i]){
+                        isGameOver = true;
+                        t.innerHTML = "💣";
+                        statusBar.innerHTML = "Game Over!"
+                        for (let i=500; i<3500; i=i+1000){
+                            setTimeout(()=>{statusBar.style.color = "red";}, i);
+                            setTimeout(()=>{statusBar.style.color = "black";}, i+500);
+                        }
+                        for (let i=0; i<minesLocation.length; i++){
+                            var mineCell = document.getElementById(String(minesLocation[i]));
+                            mineCell.innerHTML = "💣";
+                            //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
+                        }
+                        statusBar.style.fontWeight = "700";
+                        clearInterval(stopwatch);
+                        for(i=1; 100; i++){
+                            let cell = document.getElementById(String(i));
+                            cell.style.background = "#ffb0b0";
+                        }
                     }
-                    for (let i=0; i<minesLocation.length; i++){
-                        var mineCell = document.getElementById(String(minesLocation[i]));
-                        mineCell.innerHTML = "💣";
-                        //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
-                    }
-                    clearInterval(stopwatch);
-                    for(i=1; 100; i++){
-                        let cell = document.getElementById(String(i));
-                        cell.style.background = "#ffb0b0";
+                }
+            }
+            else{
+                firstClick = false;
+                for (let i=0; i<10; i++){
+                    if (t.id == minesLocation[i]){
+                        minesLocation[i] = minesLocation[i] + 2
+                        for (j=0; j>10; j++){
+                            if (minesLocation[j] == (minesLocation[i] = minesLocation[i] + 2)){
+                                minesLocation[i] = minesLocation[i] - 2;
+                            }
+                        }
                     }
                 }
             }
@@ -152,7 +193,19 @@ function flagCell(t){
                 if(correctFlaggedQuantity==10){
                     statusBar.innerHTML = "You Won!";
                     isGameOver = true;
+                    statusBar.style.fontWeight = "700";
+                    if (highScoreCounterr.innerHTML != ""){
+                        if(Number(timer.innerHTML) < Number(highScoreCounterr.innerHTML)){
+                            document.cookie = "hs="+timer.innerHTML+";path=/"; // HS - highscore
+                            console.log(document.cookie = "hs="+timer.innerHTML+";path=/");
+                        }
+                    }
+                    
                     clearInterval(stopwatch);
+                    for(i=1; 100; i++){
+                        let cell = document.getElementById(String(i));
+                        cell.style.background = "#7aff7a";
+                    }
                     for (let i=500; i<3500; i=i+1000){
                         setTimeout(()=>{statusBar.style.color = "green";}, i);
                         setTimeout(()=>{statusBar.style.color = "black";}, i+500);
@@ -166,7 +219,10 @@ function flagCell(t){
         }
     }
 }
-
+function statusClick(t){
+    let statuses = ["💣🧹", "cool game", "oh, you just found it", "💣︎♓︎■︎♏︎⬧︎⬥︎♏︎♏︎◻︎♏︎❒︎", "Minesweeper", "Minesweeper is a logic puzzle video game genre generally played on personal computers. The game features a grid of clickable tiles, with hidden mines (depicted as naval mines in the original game) scattered throughout the board. The objective is to clear the board without detonating any mines, with help from clues about the number of neighboring mines in each field"]
+    t.innerHTML = statuses[Math.floor(Math.random() * statuses.length)];
+}
 function generateMines(){
     let temp;
     for (let i=0; i<10; i++){
@@ -356,8 +412,10 @@ function checkSurroundingCells(tempCell){
     }
 }
 generateMines();
+getHighScore();
 
-for(i=1; 100; i++){
-    let cell = document.getElementById(String(i));
-    cell.style.opacity = "1";
-}
+
+// for(i=1; 100; i++){
+//     let cell = document.getElementById(String(i));
+//     cell.style.opacity = "1";
+// }

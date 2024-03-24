@@ -11,11 +11,12 @@ body{
 #Display{
     background-color: rgb(245, 245, 255);
     width: 600px;
-    height: 800px;
+    height: 860px;
     margin: 0 auto;
     padding: 10px;
     border-radius: 7px;
     text-align: center;
+    opacity: 0.82;
 }
 #MinesLayer{
     margin-right: 80px;
@@ -65,7 +66,7 @@ td{
     height: 55px;
     font-size: 26pt;
     transition: all 0.3s;
-    opacity: 0.1;
+    opacity: 1;
 }
 td:hover{
     box-shadow: 3px 3px 3.5px 3px rgba(0,0,0,0.55);
