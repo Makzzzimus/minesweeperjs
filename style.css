@@ -17,10 +17,10 @@ body{
     text-align: center;
 }
 #MinesLayer{
-    margin-right: 76px;
+    margin-right: 80px;
 }
 #TimeLayer{
-    margin-Left: 76px;
+    margin-Left: 50px;
 }
 .BottomLayer{
     display: inline-block;
