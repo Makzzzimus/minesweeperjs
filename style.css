@@ -8,7 +8,7 @@ body{
     background-color: black;
 }
 #Display{
-    background-color: rgb(245, 245, 252);
+    background-color: rgb(245, 245, 255);
     width: 600px;
     height: 800px;
     margin: 0 auto;
@@ -16,16 +16,54 @@ body{
     border-radius: 7px;
     text-align: center;
 }
+#MinesLayer{
+    margin-right: 76px;
+}
+#TimeLayer{
+    margin-Left: 76px;
+}
 .BottomLayer{
     display: inline-block;
-    background-color: black;
+    background-color: rgb(230, 230, 245);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3.5px 1px rgba(0,0,0,0.35);
 }
 #MineLayer{
     margin-right: 25%;
+    
 }
 .Icons{
     font-size: 24pt;
 }
 #TopBar{
-    
+
+}
+#Status{
+    font-size: 32pt;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.Counters{
+    font-size: 22pt;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#Field{
+    background-color: rgb(230, 230, 245);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3.5px 1px rgba(0,0,0,0.35);
+    margin: 9.5px;
+    margin-top: 25px;
+}
+td{
+    background-color: rgb(245, 245, 255);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3.5px 1px rgba(0,0,0,0.35);
+    width: 55px;
+    height: 55px;
+    font-size: 26pt;
+}
+table{
+    border-spacing: 3px;
 }

@@ -11,23 +11,138 @@
         <div id="TopBar">
             <div id="MinesLayer" class="BottomLayer">
                 <span class="Icons">💣</span>
-                <span id="MineCounter"></span>
+                <span id="MineCounter" class="Counters">00</span>
             </div>
     
             <span id="Status">Minesweeper</span>
     
             <div id="TimeLayer" class="BottomLayer">
                 <span class="Icons">⏱</span>
-                <span id="TimeCounter"></span>
+                <span id="TimeCounter" class="Counters">00</span>
             </div>
         </div>
         
         <div id="Field">
             <table>
                 <tr>
-                    <td>⠀</td>
-                    <td>⠀</td>
-                    <td>⠀</td>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell11" onclick="openCell(this)">⠀</td>
+                    <td id="Cell12" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
+                </tr>
+                <tr>
+                    <td id="Cell1" onclick="openCell(this)">⠀</td>
+                    <td id="Cell2" onclick="openCell(this)">⠀</td>
+                    <td id="Cell3" onclick="openCell(this)">⠀</td>
+                    <td id="Cell4" onclick="openCell(this)">⠀</td>
+                    <td id="Cell5" onclick="openCell(this)">⠀</td>
+                    <td id="Cell6" onclick="openCell(this)">⠀</td>
+                    <td id="Cell7" onclick="openCell(this)">⠀</td>
+                    <td id="Cell8" onclick="openCell(this)">⠀</td>
+                    <td id="Cell9" onclick="openCell(this)">⠀</td>
+                    <td id="Cell10" onclick="openCell(this)">⠀</td>
                 </tr>
             </table>
         </div>
