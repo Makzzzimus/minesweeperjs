@@ -1,9 +1,10 @@
 let minesLocation = [];
-let timer = document.getElementById("TimeCounter");
 let flagsLeft = document.getElementById("MineCounter");
 let statusBar = document.getElementById("Status");
+let timer = document.getElementById("TimeCounter");
 let isOpening = true;
 let isGameOver = false;
+let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
 
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
@@ -23,10 +24,6 @@ function openCell(t){
                     isGameOver = true;
                     t.innerHTML = "💣";
                     statusBar.innerHTML = "Game Over!"
-                    for (let i=0; i<minesLocation.length; i++){
-                        var mineCell = document.getElementById(String(minesLocation[i]));
-                        //mineCell.innerHTML = "💣";
-                    }
                     for (let i=500; i<3500; i=i+1000){
                         setTimeout(()=>{statusBar.style.color = "red";}, i);
                         setTimeout(()=>{statusBar.style.color = "black";}, i+500);
@@ -34,8 +31,9 @@ function openCell(t){
                     for (let i=0; i<minesLocation.length; i++){
                         var mineCell = document.getElementById(String(minesLocation[i]));
                         mineCell.innerHTML = "💣";
-                        //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
+                        setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
                     }
+                    clearInterval(stopwatch);
                 }
             }
             if (t.innerHTML !== "💣"){
@@ -102,7 +100,7 @@ function openCell(t){
                     t.innerHTML = nearbyMinesCount;
                     if (isOpening == true){
                         //let upperCell = Number(t.id) + 10, lowerCell = Number(t.id) -10, rightCell = Number(t.id) + 1, leftCell = Number(t.id) -1, upperRightCell = Number(t.id) - 9, upperLeftCell = Number(t.id) - 11, lowerRightCell = Number(t.id) + 11, lowerLeftCell = Number(t.id) + 9;
-    
+                        
                     }
                 }
                 
@@ -119,6 +117,23 @@ function flagCell(t){
         if (t.innerHTML ==="⠀"){
             t.innerHTML = "🚩";
             flagsLeft.innerHTML = Number(flagsLeft.innerHTML) - 1;
+            if (Number(flagsLeft.innerHTML)==0){
+                var correctFlaggedQuantity=0;
+                for (i=0; i<minesLocation.length; i++){
+                    var mineCell = document.getElementById(String(minesLocation[i]));
+                    if (mineCell.innerHTML === "🚩"){
+                        correctFlaggedQuantity++;
+                    }
+                }
+                if(correctFlaggedQuantity==10){
+                    statusBar.innerHTML = "You Won!";
+                    clearInterval(stopwatch);
+                    for (let i=500; i<3500; i=i+1000){
+                        setTimeout(()=>{statusBar.style.color = "green";}, i);
+                        setTimeout(()=>{statusBar.style.color = "black";}, i+500);
+                    }
+                }
+            }
         }
         else if(t.innerHTML === "🚩"){
             t.innerHTML = "⠀";
