@@ -1,0 +1,31 @@
+html {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+body{
+    background-color: black;
+}
+#Display{
+    background-color: rgb(245, 245, 252);
+    width: 600px;
+    height: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 7px;
+    text-align: center;
+}
+.BottomLayer{
+    display: inline-block;
+    background-color: black;
+}
+#MineLayer{
+    margin-right: 25%;
+}
+.Icons{
+    font-size: 24pt;
+}
+#TopBar{
+    
+}
