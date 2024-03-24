@@ -31,7 +31,7 @@ function openCell(t){
                     for (let i=0; i<minesLocation.length; i++){
                         var mineCell = document.getElementById(String(minesLocation[i]));
                         mineCell.innerHTML = "💣";
-                        setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
+                        //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
                     }
                     clearInterval(stopwatch);
                 }
@@ -98,17 +98,11 @@ function openCell(t){
                 
                 if (nearbyMinesCount !== 0){
                     t.innerHTML = nearbyMinesCount;
-                    if (isOpening == true){
-                        //let upperCell = Number(t.id) + 10, lowerCell = Number(t.id) -10, rightCell = Number(t.id) + 1, leftCell = Number(t.id) -1, upperRightCell = Number(t.id) - 9, upperLeftCell = Number(t.id) - 11, lowerRightCell = Number(t.id) + 11, lowerLeftCell = Number(t.id) + 9;
-                        
-                    }
                 }
-                
-                 // if ((t.id % 10) == 0){
-        
-                // }
+                if (nearbyMinesCount === 0){
+                    opening(t);
+                }
             }
-            //alert(t.id)
         }
     }
 }
@@ -155,5 +149,84 @@ function generateMines(){
     }
     //alert(minesLocation);
 }
- 
+
+function opening(t){
+    let tempCell = t;
+    //let onLeftBoundary = false;
+    //let onRightBoundary = false;
+    //let onUpperBoundary = false;
+    //let onLowerBoundary = false;
+    let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
+
+    if (document.getElementById(upperCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(upperCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(lowerCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(lowerCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(leftCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(leftCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(rightCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(rightCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(upperLeftCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(upperLeftCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(upperRightCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(upperRightCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(lowerLeftCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(lowerLeftCell);
+        checkSurroundingCells(tempCell);
+    }
+    if (document.getElementById(lowerRightCell).innerHTML === "⠀"){
+        tempCell = document.getElementById(lowerRightCell);
+        checkSurroundingCells(tempCell);
+    }
+}
+
+function checkSurroundingCells(tempCell){
+    let nearbyMinesCount = 0;
+    let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
+
+    for (let i=0; i<10; i++){
+        if (upperCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (lowerCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (leftCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (rightCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (upperLeftCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (upperRightCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (lowerLeftCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        if (lowerRightCell == minesLocation[i]){
+            nearbyMinesCount++;
+        }
+        
+    }
+    tempCell.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
+    tempCell.style.background = "rgb(225, 225, 255)";
+    if (nearbyMinesCount !== 0){
+        tempCell.innerHTML = nearbyMinesCount;
+    }
+}
 generateMines();
