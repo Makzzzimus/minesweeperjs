@@ -58,9 +58,13 @@ function openCell(t){
                         //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
                     }
                     clearInterval(stopwatch);
+                    for(i=1; 100; i++){
+                        let cell = document.getElementById(String(i));
+                        cell.style.background = "#ffb0b0";
+                    }
                 }
             }
-            if (t.innerHTML !== "💣"){
+            if (isGameOver == false){
                 if (t.id[1] === "0"){ //Is on Right corner
                     onRightCorner = true;
                 }
@@ -351,5 +355,9 @@ function checkSurroundingCells(tempCell){
         return true;
     }
 }
-
 generateMines();
+
+for(i=1; 100; i++){
+    let cell = document.getElementById(String(i));
+    cell.style.opacity = "1";
+}
