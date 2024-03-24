@@ -18,7 +18,7 @@
     
             <div id="TimeLayer" class="BottomLayer">
                 <span class="Icons">⏱</span>
-                <span id="TimeCounter" class="Counters">000</span>
+                <span id="TimeCounter" class="Counters">0</span>
             </div>
         </div>
         
@@ -146,6 +146,17 @@
                 </tr>
             </table>
         </div>
+        <fieldset>
+            <legend>Settings</legend>
+            <div>
+                <input type="checkbox" checked id="OpeningCheckbox" onclick="isOpeningEnabledSwitch(this)">
+                <label>Opening(May be bugs)</label>
+            </div>
+            <div>
+                <input type="checkbox" checked id="AnimationsCheckbox" onclick="isAnimationsEnabledSwitch(this)">
+                <label>Animations</label>
+            </div>
+        </fieldset>
     </div>
     <script src="script.js"></script>
 </body>

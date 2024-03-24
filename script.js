@@ -4,12 +4,36 @@ let statusBar = document.getElementById("Status");
 let timer = document.getElementById("TimeCounter");
 let isOpening = true;
 let isGameOver = false;
+let openingEnabled = true;
 let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
+const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
 
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
 
+function isOpeningEnabledSwitch(t){
+    if (t.checked == false){
+        openingEnabled = false;
+    }
+    else{
+        openingEnabled = true;
+    }
+}
+function isAnimationsEnabledSwitch(t){
+    if (t.checked == false){
+        for(i=1; 100; i++){
+            let cell = document.getElementById(String(i));
+            cell.style.transition = "none 0.3s";
+        }
+    }
+    else{
+        for(i=1; 100; i++){
+            let cell = document.getElementById(String(i));
+            cell.style.transition = "all 0.3s";
+        }
+    }
+}
 function openCell(t){
     //alert(t.id[1])
     if (isGameOver == false){
@@ -18,7 +42,7 @@ function openCell(t){
         let onRightCorner = false;
         if (t.innerHTML !== "🚩"){
             t.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
-            t.style.background = "rgb(225, 225, 255)";
+            t.style.background = OPENED_CELL_COLOR;
             for (let i=0; i<10; i++){
                 if (t.id == minesLocation[i]){
                     isGameOver = true;
@@ -100,7 +124,9 @@ function openCell(t){
                     t.innerHTML = nearbyMinesCount;
                 }
                 if (nearbyMinesCount === 0){
-                    opening(t);
+                    if (openingEnabled == true){
+                        opening(t);
+                    }
                 }
             }
         }
@@ -108,7 +134,7 @@ function openCell(t){
 }
 function flagCell(t){
     if(isGameOver == false){
-        if (t.innerHTML ==="⠀"){
+        if (t.innerHTML === "⠀" && t.style.background !== OPENED_CELL_COLOR){
             t.innerHTML = "🚩";
             flagsLeft.innerHTML = Number(flagsLeft.innerHTML) - 1;
             if (Number(flagsLeft.innerHTML)==0){
@@ -155,113 +181,28 @@ function opening(t){
     let emptyCellsArray = [];
     let tempCell = t;
     
-    console.log(tempCell.id);
-    //let onLeftBoundary = false;
-    //let onRightBoundary = false;
+    try{console.log(tempCell.id);}catch{}
+    let onLeftBoundary = false;
+    let onRightBoundary = false;
     // let onUpperBoundary = true;
     // let onLowerBoundary = true;
+
     let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
-
     if (tempCell !== null && tempCell !== undefined){
-        
-    //       if ((Number(tempCell.id[1]) - 10) > 0){ //Is not on Upper Boundary
-    //         if (document.getElementById(upperCell).innerHTML === "⠀" && document.getElementById(upperCell).style.background !== "rgb(225, 225, 255)"){
-    //             tempCell = document.getElementById(upperCell);
-    //             if (checkSurroundingCells(tempCell) === true){
-    //                 emptyCellsArray.push(tempCell);
-    //             }
-    //         }
-    //         onUpperBoundary = false;
-    //     }
-    //     if ((Number(tempCell.id[1]) + 10) < 101){ //Is not on Lower Boundary
-    //         if (document.getElementById(lowerCell).innerHTML === "⠀" && document.getElementById(lowerCell).style.background !== "rgb(225, 225, 255)"){
-    //             tempCell = document.getElementById(lowerCell);
-    //             if (checkSurroundingCells(tempCell) === true){
-    //                 emptyCellsArray.push(tempCell);
-    //             }
-    //         }
-    //         onLowerBoundary = false;
-    //     }
-
-    //     if (tempCell.id[1] !== "0"){ //Is not on Right Boundary
-    //         if (document.getElementById(rightCell).innerHTML === "⠀" && document.getElementById(rightCell).style.background !== "rgb(225, 225, 255)"){
-    //             tempCell = document.getElementById(rightCell);
-    //             if (checkSurroundingCells(tempCell) === true){
-    //                 emptyCellsArray.push(tempCell);
-    //             }
-    //             if (onUpperBoundary == false){
-    //                 if (document.getElementById(upperRightCell).innerHTML === "⠀" && document.getElementById(upperRightCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(upperRightCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //             if (onLowerBoundary == false){
-    //                 if (document.getElementById(lowerRightCell).innerHTML === "⠀" && document.getElementById(lowerRightCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(lowerRightCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //     }
-    //     if (tempCell.id[1] !== "1"){ //Is not on Left Boundary
-    //         if (document.getElementById(leftCell).innerHTML === "⠀" && document.getElementById(leftCell).style.background !== "rgb(225, 225, 255)"){
-    //             tempCell = document.getElementById(leftCell);
-    //             if (checkSurroundingCells(tempCell) === true){
-    //                 emptyCellsArray.push(tempCell);
-    //             }
-    //             if (onUpperBoundary == false){
-    //                 if (document.getElementById(upperLeftCell).innerHTML === "⠀" && document.getElementById(upperLeftCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(upperLeftCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //             if (onLowerBoundary == false){
-    //                 if (document.getElementById(lowerLeftCell).innerHTML === "⠀" && document.getElementById(lowerLeftCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(lowerLeftCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     else if(tempCell.id[1]=== undefined){ //Is not on Left Boundary(exception for first raw)
-    //         if(tempCell.id[0]==="1"){
-    //             if (document.getElementById(leftCell).innerHTML === "⠀" && document.getElementById(leftCell).style.background !== "rgb(225, 225, 255)"){
-    //                 tempCell = document.getElementById(leftCell);
-    //                 if (checkSurroundingCells(tempCell) === true){
-    //                     emptyCellsArray.push(tempCell);
-    //                 }
-    //             }
-    //             if (onUpperBoundary == false){
-    //                 if (document.getElementById(upperLeftCell).innerHTML === "⠀" && document.getElementById(upperLeftCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(upperLeftCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //             if (onLowerBoundary == false){
-    //                 if (document.getElementById(lowerLeftCell).innerHTML === "⠀" && document.getElementById(lowerLeftCell).style.background !== "rgb(225, 225, 255)"){
-    //                     tempCell = document.getElementById(lowerLeftCell);
-    //                     if (checkSurroundingCells(tempCell) === true){
-    //                         emptyCellsArray.push(tempCell);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //           Doesn't work for some reason, and im too lazy to get it working
-        
+        if (tempCell.id[1] === "0"){ //Is on Right corner
+            onRightBoundary = true;
+        }
+        if (tempCell.id[1] === "1"){ //Is on Left corner
+            onLeftBoundary = true;
+        }
+        else if(tempCell.id[1]=== undefined){ //Is on Left corner(exception for first raw)
+            if(tempCell.id[0]==="1"){
+                onLeftBoundary = true;
+            }
+        }
         try{
-            if (document.getElementById(upperCell).style.background !== "rgb(225, 225, 255)"){
+            //let upperCell = Number(tempCell.id) + 10;
+            if ((document.getElementById(upperCell).innerHTML === "⠀" || document.getElementById(upperCell).innerHTML === "🚩") && document.getElementById(upperCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(upperCell);
                 if (checkSurroundingCells(tempCell) === true){
                     emptyCellsArray.push(tempCell);
@@ -269,62 +210,73 @@ function opening(t){
             }
         }catch{}
         try{
-            if (document.getElementById(lowerCell).style.background !== "rgb(225, 225, 255)"){
+            //let lowerCell = Number(tempCell.id) -10;
+            if ((document.getElementById(lowerCell).innerHTML === "⠀" || document.getElementById(lowerCell).innerHTML === "🚩") && document.getElementById(lowerCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(lowerCell);
                 if (checkSurroundingCells(tempCell) === true){
                     emptyCellsArray.push(tempCell);
                 }
             }
         }catch{}
-        try{
-            if (document.getElementById(leftCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(leftCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+        if(onLeftBoundary == false){
+            try{
+                //let leftCell = Number(tempCell.id) -1;
+                if ((document.getElementById(leftCell).innerHTML === "⠀" || document.getElementById(leftCell).innerHTML === "🚩") && document.getElementById(leftCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(leftCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        try{
-            if (document.getElementById(rightCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(rightCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+            }catch{}
+            try{
+                //let upperLeftCell = Number(tempCell.id) - 11;
+                if ((document.getElementById(upperLeftCell).innerHTML === "⠀" || document.getElementById(upperLeftCell).innerHTML === "🚩") && document.getElementById(upperLeftCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(upperLeftCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        try{
-            if (document.getElementById(lowerRightCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(lowerRightCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+            }catch{}
+            try{
+                //let lowerLeftCell = Number(tempCell.id) + 9;
+                if ((document.getElementById(lowerLeftCell).innerHTML === "⠀" || document.getElementById(lowerLeftCell).innerHTML === "🚩") && document.getElementById(lowerLeftCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(lowerLeftCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        try{
-            if (document.getElementById(upperLeftCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(upperLeftCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+            }catch{}
+        }
+        if (onRightBoundary == false){
+            try{
+                //let rightCell = Number(tempCell.id) + 1;
+                if ((document.getElementById(rightCell).innerHTML === "⠀" || document.getElementById(rightCell).innerHTML === "🚩") && document.getElementById(rightCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(rightCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        try{
-            if (document.getElementById(upperRightCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(upperRightCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+            }catch{}
+            try{
+                //let lowerRightCell = Number(tempCell.id) + 11;
+                if ((document.getElementById(lowerRightCell).innerHTML === "⠀" || document.getElementById(lowerRightCell).innerHTML === "🚩") && document.getElementById(lowerRightCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(lowerRightCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        try{
-            if (document.getElementById(lowerLeftCell).style.background !== "rgb(225, 225, 255)"){
-                tempCell = document.getElementById(lowerLeftCell);
-                if (checkSurroundingCells(tempCell) === true){
-                    emptyCellsArray.push(tempCell);
+            }catch{}
+            
+            try{
+                //let upperRightCell = Number(tempCell.id) - 9;
+                if ((document.getElementById(upperRightCell).innerHTML === "⠀" || document.getElementById(upperRightCell).innerHTML === "🚩") && document.getElementById(upperRightCell).style.background !== OPENED_CELL_COLOR){
+                    tempCell = document.getElementById(upperRightCell);
+                    if (checkSurroundingCells(tempCell) === true){
+                        emptyCellsArray.push(tempCell);
+                    }
                 }
-            }
-        }catch{}
-        
+            }catch{}
+        }
         for (let i=0; emptyCellsArray.length; i++){
             opening(emptyCellsArray[i]);
         }
@@ -334,6 +286,23 @@ function opening(t){
 function checkSurroundingCells(tempCell){
     let nearbyMinesCount = 0;
     let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
+    let onLeftBoundary = false;
+    let onRightBoundary = false;
+
+    if (tempCell.id[1] === "0"){ //Is on Right corner
+        onRightBoundary = true;
+    }
+    if (tempCell.id[1] === "1"){ //Is on Left corner
+        onLeftBoundary = true;
+    }
+    else if(tempCell.id[1]=== undefined){ //Is on Left corner(exception for first raw)
+        if(tempCell.id[0]==="1"){
+            onLeftBoundary = true;
+        }
+    }
+    console.log(tempCell.id + " Cell")
+    console.log(onLeftBoundary+ " left bound");
+    console.log(onRightBoundary+ " right bound");
 
     for (let i=0; i<10; i++){
         if (upperCell == minesLocation[i]){
@@ -342,32 +311,43 @@ function checkSurroundingCells(tempCell){
         if (lowerCell == minesLocation[i]){
             nearbyMinesCount++;
         }
-        if (leftCell == minesLocation[i]){
-            nearbyMinesCount++;
+        if (onLeftBoundary == false){
+            if (leftCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
+            if (upperLeftCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
+            if (lowerLeftCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
         }
-        if (rightCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (upperLeftCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (upperRightCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (lowerLeftCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (lowerRightCell == minesLocation[i]){
-            nearbyMinesCount++;
+        if (onRightBoundary == false){
+            if (rightCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
+            
+            if (upperRightCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
+            
+            if (lowerRightCell == minesLocation[i]){
+                nearbyMinesCount++;
+            }
         }
         
     }
     tempCell.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
-    tempCell.style.background = "rgb(225, 225, 255)";
-    if (nearbyMinesCount !== 0 && tempCell.innerHTML !== null){
+    tempCell.style.background = OPENED_CELL_COLOR;
+    if(tempCell.innerHTML === "🚩"){
+        flagsLeft.innerHTML = Number(flagsLeft.innerHTML) + 1;
+        tempCell.innerHTML = "⠀";
+    }
+    if (nearbyMinesCount !== 0){
         tempCell.innerHTML = nearbyMinesCount;
     }
     if (nearbyMinesCount === 0){
+        
         return true;
     }
 }

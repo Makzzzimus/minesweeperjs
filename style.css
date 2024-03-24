@@ -3,6 +3,7 @@ html {
     width: 100%;
     overflow-y: hidden;
     overflow-x: hidden;
+    user-select: none;
   }
 body{
     background-color: black;
@@ -63,7 +64,24 @@ td{
     width: 55px;
     height: 55px;
     font-size: 26pt;
+    transition: all 0.3s;
+}
+td:hover{
+    box-shadow: 3px 3px 3.5px 3px rgba(0,0,0,0.55);
+    transform: scale(1.1,1.1);
 }
 table{
     border-spacing: 3px;
+}
+fieldset{
+    border-radius: 5px;
+    border-style: dashed;
+}
+legend{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+}
+label{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
 }
