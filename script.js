@@ -257,6 +257,9 @@ function generateField(){
         for (let j=1; j<currentDifficulty.width+1; j++){
             let tableCell = document.createElement("td");
             tableCell.id = i*10+j;
+            tableCell.innerHTML = "⠀";
+            tableCell.onclick = function(){openCell(this)};
+            tableCell.oncontextmenu = function(){flagCell(this)};
             tableRaw.appendChild(tableCell);
         }
     }
