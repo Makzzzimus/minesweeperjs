@@ -11,7 +11,7 @@ body{
 #Display{
     background-color: rgb(245, 245, 255);
     width: 600px;
-    height: 860px;
+    height: 870px;
     margin: 0 auto;
     padding: 10px;
     border-radius: 7px;
@@ -19,10 +19,10 @@ body{
     opacity: 0.82;
 }
 #MinesLayer{
-    margin-right: 80px;
+    margin-right: 70px;
 }
 #TimeLayer{
-    margin-Left: 50px;
+    margin-Left: 70px;
 }
 .BottomLayer{
     display: inline-block;

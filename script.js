@@ -11,6 +11,29 @@ let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
 let lastBgColor = "";
 
+let currentDifficulty = BEGGINER;
+const BEGGINER = {
+    name: "Begginer",
+    color: "green",
+    width: 10,
+    height: 10,
+    mines: 10,
+}
+const INTERMEDIATE = {
+    name: "Intermediate",
+    color: "orange",
+    width: 16,
+    height: 16,
+    mines: 40,
+}
+const EXPERT = {
+    name: "Expert",
+    color: "red",
+    width: 30,
+    height: 16,
+    mines: 99,
+}
+
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
@@ -26,6 +49,7 @@ function getHighScore(){
 }
 function showHighScore(t){
     t.remove();
+    document.getElementById("Display").style.height = "910px"
     document.getElementById("HighScoreLayer").style.display = "";
 }
 function isOpeningEnabledSwitch(t){
@@ -223,11 +247,12 @@ function statusClick(t){
     let statuses = ["💣🧹", "cool game", "oh, you just found it", "💣︎♓︎■︎♏︎⬧︎⬥︎♏︎♏︎◻︎♏︎❒︎", "Minesweeper", "Minesweeper is a logic puzzle video game genre generally played on personal computers. The game features a grid of clickable tiles, with hidden mines (depicted as naval mines in the original game) scattered throughout the board. The objective is to clear the board without detonating any mines, with help from clues about the number of neighboring mines in each field"]
     t.innerHTML = statuses[Math.floor(Math.random() * statuses.length)];
 }
+
 function generateMines(){
     let temp;
-    for (let i=0; i<10; i++){
-        temp = Math.round((Math.random() * 100)+1)
-        for (let i=0; i<10; i++){
+    for (let i=0; i<currentDifficulty.mines; i++){
+        temp = Math.floor(Math.random() * currentDifficulty.height*currentDifficulty.width);
+        for (let i=0; i<currentDifficulty.mines; i++){
             if (temp == minesLocation[i]){
                 location.reload();
             }
