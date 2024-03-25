@@ -3,6 +3,8 @@ let flagsLeft = document.getElementById("MineCounter");
 let statusBar = document.getElementById("Status");
 let timer = document.getElementById("TimeCounter");
 let highScoreCounterr = document.getElementById("HighScoreCounter");
+let fieldTable = document.getElementById("FieldTable");
+let difficultyBar = document.getElementById("DifficultyBar");
 let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
@@ -11,7 +13,6 @@ let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
 let lastBgColor = "";
 
-let currentDifficulty = BEGGINER;
 const BEGGINER = {
     name: "Begginer",
     color: "green",
@@ -33,7 +34,7 @@ const EXPERT = {
     height: 16,
     mines: 99,
 }
-
+let currentDifficulty = BEGGINER;
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
@@ -247,7 +248,19 @@ function statusClick(t){
     let statuses = ["💣🧹", "cool game", "oh, you just found it", "💣︎♓︎■︎♏︎⬧︎⬥︎♏︎♏︎◻︎♏︎❒︎", "Minesweeper", "Minesweeper is a logic puzzle video game genre generally played on personal computers. The game features a grid of clickable tiles, with hidden mines (depicted as naval mines in the original game) scattered throughout the board. The objective is to clear the board without detonating any mines, with help from clues about the number of neighboring mines in each field"]
     t.innerHTML = statuses[Math.floor(Math.random() * statuses.length)];
 }
-
+function generateField(){
+    difficultyBar.innerHTML = currentDifficulty.name;
+    difficultyBar.style.color = currentDifficulty.color;
+    for (let i=0; i<currentDifficulty.height; i++){
+        let tableRaw = document.createElement("tr");
+        fieldTable.insertBefore(tableRaw, null);
+        for (let j=1; j<currentDifficulty.width+1; j++){
+            let tableCell = document.createElement("td");
+            tableCell.id = i*10+j;
+            tableRaw.appendChild(tableCell);
+        }
+    }
+}
 function generateMines(){
     let temp;
     for (let i=0; i<currentDifficulty.mines; i++){
@@ -436,6 +449,7 @@ function checkSurroundingCells(tempCell){
         return true;
     }
 }
+generateField();
 generateMines();
 getHighScore();
 
