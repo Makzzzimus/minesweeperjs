@@ -34,18 +34,40 @@ const EXPERT = {
     height: 16,
     mines: 99,
 }
-let currentDifficulty = BEGGINER;
+let currentDifficulty = null;
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
+function difficultyChoosed(t){
+    document.cookie = "dif="+t.value+";path=/";
+    location.reload();
+}
+function getDifficulty(){
+    if (document.cookie != ""){
+        let cookies = document.cookie.split("; ");
+        for (let i=0; i<cookies.length; i++){
+            if (cookies[i].slice(0, 3) == "dif"){
+                if(cookies[i].slice(4) == "BEGGINER"){currentDifficulty = BEGGINER;}
+                if(cookies[i].slice(4) == "INTERMEDIATE"){currentDifficulty = INTERMEDIATE;}
+                if(cookies[i].slice(4) == "EXPERT"){currentDifficulty = EXPERT;}
+            }
+        }
+        
+    }
+    else{
+        currentDifficulty = BEGGINER;
+    }
+
+}
 
 function getHighScore(){
     if (document.cookie != ""){
-        let highscore = "";
-        for (i=3; i<document.cookie.length; i++){
-            highscore = highscore + document.cookie[i];
+        let cookies = document.cookie.split("; ");
+        for (let i=0; i<cookies.length; i++){
+            if (cookies[i].slice(0, 3) == "bhs"){
+                highScoreCounterr.innerHTML = cookies[i].slice(4);
+            }
         }
-        highScoreCounterr.innerHTML = highscore;
     }
 }
 function showHighScore(t){
@@ -221,7 +243,7 @@ function flagCell(t){
                     statusBar.style.fontWeight = "700";
                     if (highScoreCounterr.innerHTML != ""){
                         if(Number(timer.innerHTML) < Number(highScoreCounterr.innerHTML)){
-                            document.cookie = "hs="+timer.innerHTML+";path=/"; // HS - highscore
+                            document.cookie = "bhs="+timer.innerHTML+";path=/"; // BHS - begginer level highscore
                             console.log(document.cookie = "hs="+timer.innerHTML+";path=/");
                         }
                     }
@@ -452,6 +474,7 @@ function checkSurroundingCells(tempCell){
         return true;
     }
 }
+getDifficulty();
 generateField();
 generateMines();
 getHighScore();

@@ -44,11 +44,11 @@
                 <label>Dynamic backround</label>
             </div>
             <button onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
-            <select id="DifficultyMenu">
+            <select id="DifficultyMenu" onchange="difficultyChoosed(this)">
                 <option value="">--Change difficulty--</option>
-                <option value="begginer">Begginer</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="expert">Expert</option>
+                <option value="BEGGINER">Begginer</option>
+                <option value="INTERMEDIATE">Intermediate</option>
+                <option value="EXPERT">Expert</option>
             </select>
             <br>
             <div style="margin-top: 15px; display: none;" class="BottomLayer" id="HighScoreLayer">
