@@ -5,11 +5,12 @@ let timer = document.getElementById("TimeCounter");
 let highScoreCounterr = document.getElementById("HighScoreCounter");
 let fieldTable = document.getElementById("FieldTable");
 let difficultyBar = document.getElementById("DifficultyBar");
+let display = document.getElementById("Display");
 let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
 let firstClick = true;
-let stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
+let stopwatch = null;
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
 let lastBgColor = "";
 
@@ -19,6 +20,8 @@ const BEGGINER = {
     width: 10,
     height: 10,
     mines: 10,
+    displayWidth: "620px",
+    displayHeight: "870px",
 }
 const INTERMEDIATE = {
     name: "Intermediate",
@@ -26,6 +29,8 @@ const INTERMEDIATE = {
     width: 16,
     height: 16,
     mines: 40,
+    displayWidth: "980px",
+    displayHeight: "1250px",
 }
 const EXPERT = {
     name: "Expert",
@@ -33,6 +38,8 @@ const EXPERT = {
     width: 30,
     height: 16,
     mines: 99,
+    displayWidth: "1740px",
+    displayHeight: "1250px",
 }
 let currentDifficulty = null;
 document.addEventListener('contextmenu', event => {
@@ -116,7 +123,7 @@ function openCell(t){
             t.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
             t.style.background = OPENED_CELL_COLOR;
             if (firstClick == false){
-                for (let i=0; i<10; i++){
+                for (let i=0; i<currentDifficulty.mines; i++){
                     if (t.id == minesLocation[i]){
                         isGameOver = true;
                         t.innerHTML = "💣";
@@ -126,8 +133,10 @@ function openCell(t){
                             setTimeout(()=>{statusBar.style.color = "black";}, i+500);
                         }
                         for (let i=0; i<minesLocation.length; i++){
-                            var mineCell = document.getElementById(String(minesLocation[i]));
-                            mineCell.innerHTML = "💣";
+                            try{
+                                var mineCell = document.getElementById(String(minesLocation[i]));
+                                mineCell.innerHTML = "💣";
+                            }catch{}
                             //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
                         }
                         statusBar.style.fontWeight = "700";
@@ -141,7 +150,7 @@ function openCell(t){
             }
             else{
                 firstClick = false;
-                for (let i=0; i<10; i++){
+                for (let i=0; i<currentDifficulty.mines; i++){
                     if (t.id == minesLocation[i]){
                         minesLocation[i] = minesLocation[i] + 2
                         for (j=0; j>10; j++){
@@ -153,60 +162,55 @@ function openCell(t){
                 }
             }
             if (isGameOver == false){
-                if (t.id[1] === "0"){ //Is on Right corner
+                if ((t.id % currentDifficulty.width) == 0){ //Is on Right corner
                     onRightCorner = true;
                 }
-                if (t.id[1] === "1"){ //Is on Left corner
+                if ((t.id % currentDifficulty.width) == 1){ //Is on Left corner
                     onLeftCorner = true;
                 }
-                else if(t.id[1]=== undefined){ //Is on Left corner(exception for first raw)
-                    if(t.id[0]==="1"){
-                        onLeftCorner = true;
-                    }
-                }
                 if (onRightCorner == false){
-                    for (let i=0; i<10; i++){
+                    for (let i=0; i<currentDifficulty.mines; i++){
                         if (Number(t.id) + 1 == minesLocation[i]){ //Right Cell
                             nearbyMinesCount++;
                         }
                     }
-                    for (let i=0; i<10; i++){
-                        if (Number(t.id) - 9 == minesLocation[i]){ // Upper Right Cell
+                    for (let i=0; i<currentDifficulty.mines; i++){
+                        if (Number(t.id) - (currentDifficulty.width-1) == minesLocation[i]){ // Upper Right Cell
                             nearbyMinesCount++;
                         }
                     }
-                    for (let i=0; i<10; i++){
-                        if (Number(t.id) + 11 == minesLocation[i]){ //Lower Right Cell
+                    for (let i=0; i<currentDifficulty.mines; i++){
+                        if (Number(t.id) + (currentDifficulty.width+1) == minesLocation[i]){ //Lower Right Cell
                             nearbyMinesCount++;
                         }
                     }
                 }
                 if(onLeftCorner == false){
-                    for (let i=0; i<10; i++){
+                    for (let i=0; i<currentDifficulty.mines; i++){
                         if (Number(t.id) - 1 == minesLocation[i]){ //Left Cell
                             nearbyMinesCount++;
                         }
                     }
-                    for (let i=0; i<10; i++){
-                        if (Number(t.id) - 11 == minesLocation[i]){ //Upper Left Cell
+                    for (let i=0; i<currentDifficulty.mines; i++){
+                        if (Number(t.id) - (currentDifficulty.width+1) == minesLocation[i]){ //Upper Left Cell
                             nearbyMinesCount++;
                         }
                     }
                     
-                    for (let i=0; i<10; i++){
-                        if (Number(t.id) + 9 == minesLocation[i]){ //Lower Left Cell
+                    for (let i=0; i<currentDifficulty.mines; i++){
+                        if (Number(t.id) + (currentDifficulty.width-1) == minesLocation[i]){ //Lower Left Cell
                             nearbyMinesCount++;
                         }
                     }
                 }
     
-                for (let i=0; i<10; i++){
-                    if (Number(t.id) + 10 == minesLocation[i]){ //Lower Cell
+                for (let i=0; i<currentDifficulty.mines; i++){
+                    if (Number(t.id) + currentDifficulty.width == minesLocation[i]){ //Lower Cell
                         nearbyMinesCount++;
                     }
                 }
-                for (let i=0; i<10; i++){
-                    if (Number(t.id) - 10 == minesLocation[i]){ //Upper Cell
+                for (let i=0; i<currentDifficulty.mines; i++){
+                    if (Number(t.id) - currentDifficulty.width == minesLocation[i]){ //Upper Cell
                         nearbyMinesCount++;
                     }
                 }
@@ -237,7 +241,7 @@ function flagCell(t){
                         correctFlaggedQuantity++;
                     }
                 }
-                if(correctFlaggedQuantity==10){
+                if(correctFlaggedQuantity==currentDifficulty.mines){
                     statusBar.innerHTML = "You Won!";
                     isGameOver = true;
                     statusBar.style.fontWeight = "700";
@@ -273,12 +277,15 @@ function statusClick(t){
 function generateField(){
     difficultyBar.innerHTML = currentDifficulty.name;
     difficultyBar.style.color = currentDifficulty.color;
+    display.style.height = currentDifficulty.displayHeight;
+    display.style.width = currentDifficulty.displayWidth;
+    flagsLeft.innerHTML = currentDifficulty.mines;
     for (let i=0; i<currentDifficulty.height; i++){
         let tableRaw = document.createElement("tr");
         fieldTable.insertBefore(tableRaw, null);
         for (let j=1; j<currentDifficulty.width+1; j++){
             let tableCell = document.createElement("td");
-            tableCell.id = i*10+j;
+            tableCell.id = i*currentDifficulty.width+j;
             tableCell.innerHTML = "⠀";
             tableCell.onclick = function(){openCell(this)};
             tableCell.oncontextmenu = function(){flagCell(this)};
@@ -288,16 +295,28 @@ function generateField(){
 }
 function generateMines(){
     let temp;
+    let retry = false;
     for (let i=0; i<currentDifficulty.mines; i++){
         temp = Math.floor(Math.random() * currentDifficulty.height*currentDifficulty.width);
         for (let i=0; i<currentDifficulty.mines; i++){
             if (temp == minesLocation[i]){
-                location.reload();
+                console.log(minesLocation)
+                minesLocation = [];
+                setTimeout(generateMines, 0);
+                retry = true;
             }
         }
-        minesLocation.push(temp);
+        if(retry === false){
+            minesLocation.push(temp);
+        }
     }
     //alert(minesLocation);
+    if (minesLocation.length !== 0){
+        document.getElementById("loadingText").remove();
+        generateField();
+        stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
+        console.log(minesLocation)
+    }
 }
 
 function opening(t){
@@ -310,18 +329,13 @@ function opening(t){
     // let onUpperBoundary = true;
     // let onLowerBoundary = true;
 
-    let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
+    let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty-1);
     if (tempCell !== null && tempCell !== undefined){
-        if (tempCell.id[1] === "0"){ //Is on Right corner
+        if ((tempCell.id % currentDifficulty.width) == 0){ //Is on Right corner
             onRightBoundary = true;
         }
-        if (tempCell.id[1] === "1"){ //Is on Left corner
+        if ((tempCell.id % currentDifficulty.width) == 1){ //Is on Left corner
             onLeftBoundary = true;
-        }
-        else if(tempCell.id[1]=== undefined){ //Is on Left corner(exception for first raw)
-            if(tempCell.id[0]==="1"){
-                onLeftBoundary = true;
-            }
         }
         try{
             //let upperCell = Number(tempCell.id) + 10;
@@ -408,26 +422,21 @@ function opening(t){
 
 function checkSurroundingCells(tempCell){
     let nearbyMinesCount = 0;
-    let upperCell = Number(tempCell.id) + 10, lowerCell = Number(tempCell.id) -10, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - 9, upperLeftCell = Number(tempCell.id) - 11, lowerRightCell = Number(tempCell.id) + 11, lowerLeftCell = Number(tempCell.id) + 9;
+    let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty-1);
     let onLeftBoundary = false;
     let onRightBoundary = false;
 
-    if (tempCell.id[1] === "0"){ //Is on Right corner
+    if ((tempCell.id % currentDifficulty.width) == 0){ //Is on Right corner
         onRightBoundary = true;
     }
-    if (tempCell.id[1] === "1"){ //Is on Left corner
+    if ((tempCell.id % currentDifficulty.width) == 1){ //Is on Left corner
         onLeftBoundary = true;
-    }
-    else if(tempCell.id[1]=== undefined){ //Is on Left corner(exception for first raw)
-        if(tempCell.id[0]==="1"){
-            onLeftBoundary = true;
-        }
     }
     console.log(tempCell.id + " Cell")
     console.log(onLeftBoundary+ " left bound");
     console.log(onRightBoundary+ " right bound");
 
-    for (let i=0; i<10; i++){
+    for (let i=0; i<currentDifficulty.mines; i++){
         if (upperCell == minesLocation[i]){
             nearbyMinesCount++;
         }
@@ -475,8 +484,8 @@ function checkSurroundingCells(tempCell){
     }
 }
 getDifficulty();
-generateField();
 generateMines();
+
 getHighScore();
 
 

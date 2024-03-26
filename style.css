@@ -1,7 +1,7 @@
 html {
     height: 100%;
     width: 100%;
-    overflow-y: hidden;
+
     overflow-x: hidden;
     user-select: none;
   }
@@ -19,10 +19,10 @@ body{
     opacity: 0.82;
 }
 #MinesLayer{
-    margin-right: 70px;
+    margin-right: 9%;
 }
 #TimeLayer{
-    margin-Left: 70px;
+    margin-Left: 9%;
 }
 .BottomLayer{
     display: inline-block;
