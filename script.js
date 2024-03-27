@@ -296,12 +296,12 @@ function generateField(){
 function generateMines(){
     let temp;
     let retry = false;
-    for (let i=0; i<currentDifficulty.mines; i++){
+    while (minesLocation.length<currentDifficulty.mines){
         temp = Math.floor(Math.random() * currentDifficulty.height*currentDifficulty.width);
-        for (let i=0; i<currentDifficulty.mines; i++){
-            if (temp == minesLocation[i]){
+        for (let j=0; j<minesLocation.length; j++){
+            if (temp == minesLocation[j]){
                 console.log(minesLocation)
-                minesLocation = [];
+                //minesLocation = [];
                 setTimeout(generateMines, 0);
                 retry = true;
             }
@@ -309,9 +309,12 @@ function generateMines(){
         if(retry === false){
             minesLocation.push(temp);
         }
+        else{
+            break;
+        }
     }
     //alert(minesLocation);
-    if (minesLocation.length !== 0){
+    if (minesLocation.length === currentDifficulty.mines){
         document.getElementById("loadingText").remove();
         generateField();
         stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
@@ -338,7 +341,7 @@ function opening(t){
         if ((tempCell.id % currentDifficulty.width) == 1){ //Is on Left corner
             onLeftBoundary = true;
         }
-        //try{
+        try{
             //let upperCell = Number(tempCell.id) + 10;
             if ((document.getElementById(upperCell).innerHTML === "⠀" || document.getElementById(upperCell).innerHTML === "🚩") && document.getElementById(upperCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(upperCell);
@@ -346,8 +349,8 @@ function opening(t){
                     emptyCellsArray.push(tempCell);
                 }
             }
-        //}catch{}
-        //try{
+        }catch{}
+        try{
             //let lowerCell = Number(tempCell.id) -10;
             if ((document.getElementById(lowerCell).innerHTML === "⠀" || document.getElementById(lowerCell).innerHTML === "🚩") && document.getElementById(lowerCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(lowerCell);
@@ -355,7 +358,7 @@ function opening(t){
                     emptyCellsArray.push(tempCell);
                 }
             }
-        //}catch{}
+        }catch{}
         if(onLeftBoundary == false){
             //try{
                 //let leftCell = Number(tempCell.id) -1;
@@ -366,7 +369,7 @@ function opening(t){
                     }
                 }
             //}catch{}
-            //try{
+            try{
                 //let upperLeftCell = Number(tempCell.id) - 11;
                 if ((document.getElementById(upperLeftCell).innerHTML === "⠀" || document.getElementById(upperLeftCell).innerHTML === "🚩") && document.getElementById(upperLeftCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(upperLeftCell);
@@ -374,8 +377,8 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            //catch{}
-            //try{
+            }catch{}
+            try{
                 //let lowerLeftCell = Number(tempCell.id) + 9;
                 if ((document.getElementById(lowerLeftCell).innerHTML ==="⠀" || document.getElementById(lowerLeftCell).innerHTML === "🚩") && document.getElementById(lowerLeftCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(lowerLeftCell);
@@ -383,7 +386,7 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            //}catch{}
+            }catch{}
         }
         if (onRightBoundary == false){
             //try{
@@ -395,7 +398,7 @@ function opening(t){
                     }
                 }
             //}catch{}
-            //try{
+            try{
                 //let lowerRightCell = Number(tempCell.id) + 11;
                 if ((document.getElementById(lowerRightCell).innerHTML === "⠀" || document.getElementById(lowerRightCell).innerHTML === "🚩") && document.getElementById(lowerRightCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(lowerRightCell);
@@ -403,9 +406,9 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            //}catch{}
+            }catch{}
             
-            //try{
+            try{
                 //let upperRightCell = Number(tempCell.id) - 9;
                 if ((document.getElementById(upperRightCell).innerHTML === "⠀" || document.getElementById(upperRightCell).innerHTML === "🚩") && document.getElementById(upperRightCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(upperRightCell);
@@ -413,7 +416,7 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            //}catch{}
+            }catch{}
         }
         console.log(emptyCellsArray.length+" emptyCellsArray.length")
         for (let i=0; i<emptyCellsArray.length; i++){
