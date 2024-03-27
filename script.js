@@ -38,7 +38,7 @@ const EXPERT = {
     width: 30,
     height: 16,
     mines: 99,
-    displayWidth: "1740px",
+    displayWidth: "1760px",
     displayHeight: "1230px",
 }
 let currentDifficulty = null;
@@ -139,8 +139,8 @@ function openCell(t){
             t.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
             t.style.background = OPENED_CELL_COLOR;
             if (firstClick == false){
-                for (let i=0; i<currentDifficulty.mines; i++){
-                    if (t.id == minesLocation[i]){
+                for (let j=0; j<currentDifficulty.mines; j++){
+                    if (t.id == minesLocation[j]){
                         isGameOver = true;
                         t.innerHTML = "💣";
                         statusBar.innerHTML = "Game Over!"
@@ -148,17 +148,17 @@ function openCell(t){
                             setTimeout(()=>{statusBar.style.color = "red";}, i);
                             setTimeout(()=>{statusBar.style.color = "black";}, i+500);
                         }
-                        for (let i=0; i<minesLocation.length; i++){
-                            try{
-                                var mineCell = document.getElementById(String(minesLocation[i]));
-                                mineCell.innerHTML = "💣";
-                            }catch{}
-                            //setTimeout(()=>{mineCell.innerHTML = "💥";}, 250);
+                        for (let i=0; i<currentDifficulty.mines; i++){
+                            var mineCell = document.getElementById(minesLocation[i]);
+                            //console.log(i+" i")
+                            //console.log(minesLocation[i]+" minesLocation[i]");
+                            mineCell.innerHTML = "💣";
+                            //setTimeout(function(){mineCell.innerHTML = "💥";}, 250);
                         }
                         statusBar.style.fontWeight = "700";
                         clearInterval(stopwatch);
-                        for(i=1; 100; i++){
-                            let cell = document.getElementById(String(i));
+                        for(i=1; i<(currentDifficulty.width*currentDifficulty.height)+1; i++){
+                            let cell = document.getElementById(i);
                             cell.style.background = "#ffb0b0";
                         }
                     }
@@ -168,10 +168,12 @@ function openCell(t){
                 firstClick = false;
                 for (let i=0; i<currentDifficulty.mines; i++){
                     if (t.id == minesLocation[i]){
-                        minesLocation[i] = minesLocation[i] + 2
-                        for (j=0; j>10; j++){
-                            if (minesLocation[j] == (minesLocation[i] = minesLocation[i] + 2)){
-                                minesLocation[i] = minesLocation[i] - 2;
+                        //console.log("first clicked cell was mined");
+                        minesLocation[i] =+ 2
+                        for (j=0; j<currentDifficulty.mines; j++){
+                            //console.log("oops");
+                            if (minesLocation[j] == (minesLocation[i] =+ 2)){
+                                minesLocation[i] =- 4;
                             }
                         }
                     }
@@ -276,8 +278,8 @@ function flagCell(t){
                     }
                     
                     clearInterval(stopwatch);
-                    for(i=1; 100; i++){
-                        let cell = document.getElementById(String(i));
+                    for(i=1; i<(currentDifficulty.width*currentDifficulty.height)+1; i++){
+                        let cell = document.getElementById(i);
                         cell.style.background = "#7aff7a";
                     }
                     for (let i=500; i<3500; i=i+1000){
@@ -320,9 +322,9 @@ function generateMines(){
     let temp;
     let retry = false;
     while (minesLocation.length<currentDifficulty.mines){
-        temp = Math.floor(Math.random() * currentDifficulty.height*currentDifficulty.width);
+        temp = Math.floor(Math.random() * (currentDifficulty.height*currentDifficulty.width))+1;
         for (let j=0; j<minesLocation.length; j++){
-            if (temp == minesLocation[j]){
+            if (temp == minesLocation[j] || temp>(currentDifficulty.height*currentDifficulty.width)){
                 //console.log(minesLocation)
                 //minesLocation = [];
                 setTimeout(generateMines, 0);
