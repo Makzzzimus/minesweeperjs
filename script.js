@@ -30,7 +30,7 @@ const INTERMEDIATE = {
     height: 16,
     mines: 40,
     displayWidth: "980px",
-    displayHeight: "1250px",
+    displayHeight: "1230px",
 }
 const EXPERT = {
     name: "Expert",
@@ -39,7 +39,7 @@ const EXPERT = {
     height: 16,
     mines: 99,
     displayWidth: "1740px",
-    displayHeight: "1250px",
+    displayHeight: "1230px",
 }
 let currentDifficulty = null;
 document.addEventListener('contextmenu', event => {
@@ -70,16 +70,32 @@ function getDifficulty(){
 function getHighScore(){
     if (document.cookie != ""){
         let cookies = document.cookie.split("; ");
-        for (let i=0; i<cookies.length; i++){
-            if (cookies[i].slice(0, 3) == "bhs"){
-                highScoreCounterr.innerHTML = cookies[i].slice(4);
+        if (currentDifficulty.name == "Begginer"){
+            for (let i=0; i<cookies.length; i++){
+                if (cookies[i].slice(0, 3) == "bhs"){
+                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                }
+            }
+        }
+        if (currentDifficulty.name == "Intermediate"){
+            for (let i=0; i<cookies.length; i++){
+                if (cookies[i].slice(0, 3) == "ihs"){
+                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                }
+            }
+        }
+        if (currentDifficulty.name == "Expert"){
+            for (let i=0; i<cookies.length; i++){
+                if (cookies[i].slice(0, 3) == "ehs"){
+                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                }
             }
         }
     }
 }
 function showHighScore(t){
     t.remove();
-    document.getElementById("Display").style.height = "910px"
+    display.style.height = Number(display.style.height.slice(0, -2)) + 50 + "px";
     document.getElementById("HighScoreLayer").style.display = "";
 }
 function isOpeningEnabledSwitch(t){
@@ -247,8 +263,15 @@ function flagCell(t){
                     statusBar.style.fontWeight = "700";
                     if (highScoreCounterr.innerHTML != ""){
                         if(Number(timer.innerHTML) < Number(highScoreCounterr.innerHTML)){
-                            document.cookie = "bhs="+timer.innerHTML+";path=/"; // BHS - begginer level highscore
-                            console.log(document.cookie = "hs="+timer.innerHTML+";path=/");
+                            if (currentDifficulty.name == "Begginer"){
+                                document.cookie = "bhs="+timer.innerHTML+";path=/"; // BHS - begginer level highscore
+                            }
+                            else if(currentDifficulty.name == "Intermediate"){
+                                document.cookie = "ihs="+timer.innerHTML+";path=/"; // IHS - Intermediate level highscore
+                            }
+                            else if(currentDifficulty.name == "Extreme"){
+                                document.cookie = "ehs="+timer.innerHTML+";path=/"; // EHS - Extreme level highscore
+                            }
                         }
                     }
                     
@@ -300,7 +323,7 @@ function generateMines(){
         temp = Math.floor(Math.random() * currentDifficulty.height*currentDifficulty.width);
         for (let j=0; j<minesLocation.length; j++){
             if (temp == minesLocation[j]){
-                console.log(minesLocation)
+                //console.log(minesLocation)
                 //minesLocation = [];
                 setTimeout(generateMines, 0);
                 retry = true;
@@ -313,12 +336,11 @@ function generateMines(){
             break;
         }
     }
-    //alert(minesLocation);
     if (minesLocation.length === currentDifficulty.mines){
         document.getElementById("loadingText").remove();
         generateField();
         stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
-        console.log(minesLocation)
+        //console.log(minesLocation) //uncomment for mines location
     }
 }
 
@@ -437,9 +459,9 @@ function checkSurroundingCells(tempCell){
     if ((tempCell.id % currentDifficulty.width) == 1){ //Is on Left corner
         onLeftBoundary = true;
     }
-    console.log(tempCell.id + " Cell")
-    console.log(onLeftBoundary+ " left bound");
-    console.log(onRightBoundary+ " right bound");
+    // console.log(tempCell.id + " Cell")
+    // console.log(onLeftBoundary+ " left bound");
+    // console.log(onRightBoundary+ " right bound");
 
     if (onRightBoundary == false){
         for (let i=0; i<currentDifficulty.mines; i++){
