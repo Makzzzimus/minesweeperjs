@@ -329,15 +329,16 @@ function opening(t){
     // let onUpperBoundary = true;
     // let onLowerBoundary = true;
 
-    let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty-1);
+    
     if (tempCell !== null && tempCell !== undefined){
+        let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty.width-1);
         if ((tempCell.id % currentDifficulty.width) == 0){ //Is on Right corner
             onRightBoundary = true;
         }
         if ((tempCell.id % currentDifficulty.width) == 1){ //Is on Left corner
             onLeftBoundary = true;
         }
-        try{
+        //try{
             //let upperCell = Number(tempCell.id) + 10;
             if ((document.getElementById(upperCell).innerHTML === "⠀" || document.getElementById(upperCell).innerHTML === "🚩") && document.getElementById(upperCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(upperCell);
@@ -345,8 +346,8 @@ function opening(t){
                     emptyCellsArray.push(tempCell);
                 }
             }
-        }catch{}
-        try{
+        //}catch{}
+        //try{
             //let lowerCell = Number(tempCell.id) -10;
             if ((document.getElementById(lowerCell).innerHTML === "⠀" || document.getElementById(lowerCell).innerHTML === "🚩") && document.getElementById(lowerCell).style.background !== OPENED_CELL_COLOR){
                 tempCell = document.getElementById(lowerCell);
@@ -354,9 +355,9 @@ function opening(t){
                     emptyCellsArray.push(tempCell);
                 }
             }
-        }catch{}
+        //}catch{}
         if(onLeftBoundary == false){
-            try{
+            //try{
                 //let leftCell = Number(tempCell.id) -1;
                 if ((document.getElementById(leftCell).innerHTML === "⠀" || document.getElementById(leftCell).innerHTML === "🚩") && document.getElementById(leftCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(leftCell);
@@ -364,8 +365,8 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
-            try{
+            //}catch{}
+            //try{
                 //let upperLeftCell = Number(tempCell.id) - 11;
                 if ((document.getElementById(upperLeftCell).innerHTML === "⠀" || document.getElementById(upperLeftCell).innerHTML === "🚩") && document.getElementById(upperLeftCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(upperLeftCell);
@@ -373,19 +374,19 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
-            try{
+            //catch{}
+            //try{
                 //let lowerLeftCell = Number(tempCell.id) + 9;
-                if ((document.getElementById(lowerLeftCell).innerHTML === "⠀" || document.getElementById(lowerLeftCell).innerHTML === "🚩") && document.getElementById(lowerLeftCell).style.background !== OPENED_CELL_COLOR){
+                if ((document.getElementById(lowerLeftCell).innerHTML ==="⠀" || document.getElementById(lowerLeftCell).innerHTML === "🚩") && document.getElementById(lowerLeftCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(lowerLeftCell);
                     if (checkSurroundingCells(tempCell) === true){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
+            //}catch{}
         }
         if (onRightBoundary == false){
-            try{
+            //try{
                 //let rightCell = Number(tempCell.id) + 1;
                 if ((document.getElementById(rightCell).innerHTML === "⠀" || document.getElementById(rightCell).innerHTML === "🚩") && document.getElementById(rightCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(rightCell);
@@ -393,8 +394,8 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
-            try{
+            //}catch{}
+            //try{
                 //let lowerRightCell = Number(tempCell.id) + 11;
                 if ((document.getElementById(lowerRightCell).innerHTML === "⠀" || document.getElementById(lowerRightCell).innerHTML === "🚩") && document.getElementById(lowerRightCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(lowerRightCell);
@@ -402,9 +403,9 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
+            //}catch{}
             
-            try{
+            //try{
                 //let upperRightCell = Number(tempCell.id) - 9;
                 if ((document.getElementById(upperRightCell).innerHTML === "⠀" || document.getElementById(upperRightCell).innerHTML === "🚩") && document.getElementById(upperRightCell).style.background !== OPENED_CELL_COLOR){
                     tempCell = document.getElementById(upperRightCell);
@@ -412,17 +413,18 @@ function opening(t){
                         emptyCellsArray.push(tempCell);
                     }
                 }
-            }catch{}
+            //}catch{}
         }
-        for (let i=0; emptyCellsArray.length; i++){
-            opening(emptyCellsArray[i]);
+        console.log(emptyCellsArray.length+" emptyCellsArray.length")
+        for (let i=0; i<emptyCellsArray.length; i++){
+            setTimeout(function(){opening(emptyCellsArray[i])}, 15)
         }
     }
 }
 
 function checkSurroundingCells(tempCell){
     let nearbyMinesCount = 0;
-    let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty-1);
+    //let upperCell = Number(tempCell.id) + currentDifficulty.width, lowerCell = Number(tempCell.id) -currentDifficulty.width, rightCell = Number(tempCell.id) + 1, leftCell = Number(tempCell.id) -1, upperRightCell = Number(tempCell.id) - (currentDifficulty.width-1), upperLeftCell = Number(tempCell.id) - (currentDifficulty.width+1), lowerRightCell = Number(tempCell.id) + (currentDifficulty.width+1), lowerLeftCell = Number(tempCell.id) + (currentDifficulty-1);
     let onLeftBoundary = false;
     let onRightBoundary = false;
 
@@ -436,39 +438,53 @@ function checkSurroundingCells(tempCell){
     console.log(onLeftBoundary+ " left bound");
     console.log(onRightBoundary+ " right bound");
 
-    for (let i=0; i<currentDifficulty.mines; i++){
-        if (upperCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (lowerCell == minesLocation[i]){
-            nearbyMinesCount++;
-        }
-        if (onLeftBoundary == false){
-            if (leftCell == minesLocation[i]){
-                nearbyMinesCount++;
-            }
-            if (upperLeftCell == minesLocation[i]){
-                nearbyMinesCount++;
-            }
-            if (lowerLeftCell == minesLocation[i]){
+    if (onRightBoundary == false){
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) + 1 == minesLocation[i]){ //Right Cell
                 nearbyMinesCount++;
             }
         }
-        if (onRightBoundary == false){
-            if (rightCell == minesLocation[i]){
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) - (currentDifficulty.width-1) == minesLocation[i]){ // Upper Right Cell
                 nearbyMinesCount++;
             }
-            
-            if (upperRightCell == minesLocation[i]){
+        }
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) + (currentDifficulty.width+1) == minesLocation[i]){ //Lower Right Cell
                 nearbyMinesCount++;
             }
-            
-            if (lowerRightCell == minesLocation[i]){
+        }
+    }
+    if(onLeftBoundary == false){
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) - 1 == minesLocation[i]){ //Left Cell
+                nearbyMinesCount++;
+            }
+        }
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) - (currentDifficulty.width+1) == minesLocation[i]){ //Upper Left Cell
                 nearbyMinesCount++;
             }
         }
         
+        for (let i=0; i<currentDifficulty.mines; i++){
+            if (Number(tempCell.id) + (currentDifficulty.width-1) == minesLocation[i]){ //Lower Left Cell
+                nearbyMinesCount++;
+            }
+        }
     }
+
+    for (let i=0; i<currentDifficulty.mines; i++){
+        if (Number(tempCell.id) + currentDifficulty.width == minesLocation[i]){ //Lower Cell
+            nearbyMinesCount++;
+        }
+    }
+    for (let i=0; i<currentDifficulty.mines; i++){
+        if (Number(tempCell.id) - currentDifficulty.width == minesLocation[i]){ //Upper Cell
+            nearbyMinesCount++;
+        }
+    }
+    
     tempCell.style.boxShadow = "inset 1.5px 1.5px 3px 1px rgba(0,0,0,0.55)";
     tempCell.style.background = OPENED_CELL_COLOR;
     if(tempCell.innerHTML === "🚩"){
