@@ -44,12 +44,13 @@
                 <input type="checkbox" checked id="BackgroundCheckbox" onclick="isDynamicBackroundEnabledSwitch(this)">
                 <label>Dynamic backround</label>
             </div>
-            <button onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
+            <button id="HighScoreButton" onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
             <select id="DifficultyMenu" onchange="difficultyChoosed(this)">
                 <option value="">--Change difficulty--</option>
                 <option value="BEGGINER">Begginer</option>
                 <option value="INTERMEDIATE">Intermediate</option>
                 <option value="EXPERT">Expert</option>
+                <option value="CUSTOM">Custom</option>
             </select>
             <br>
             <div style="margin-top: 15px; display: none;" class="BottomLayer" id="HighScoreLayer">
@@ -58,7 +59,27 @@
             </div>
         </fieldset>
     </div>
-    
+    <div id="BackgroundDim">
+        <div id="PopupWindow">
+            <h2>Custom difficulty options</h2>
+            <div id="PoputContent">
+                <div class="InputBox">
+                    <label class="PopupLabel">Amout of horizontal cells</label><br>
+                    <input type="number" id="HorizontalCellsInput">
+                </div>
+                <div class="InputBox">
+                    <label class="PopupLabel">Amout of verical cells</label><br>
+                    <input type="number" id="VerticalCellsInput">
+                </div>
+                <div class="InputBox">
+                    <label class="PopupLabel">Amout of mines</label><br>
+                    <input type="number"id="MinesInput">
+                </div>
+                <button onclick="startCustomGame()" class="PopupButton">Start!</button><br>
+                <button onclick="cancelCustom()" style="margin-top: 8px; background-color: rgb(235, 235, 235); color: rgb(25, 25, 25); padding-left: 15px; padding-right: 15px;">Cancel</button>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
     <script src="bgcollist.js"></script>
 </body>

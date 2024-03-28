@@ -6,6 +6,7 @@ let highScoreCounterr = document.getElementById("HighScoreCounter");
 let fieldTable = document.getElementById("FieldTable");
 let difficultyBar = document.getElementById("DifficultyBar");
 let display = document.getElementById("Display");
+let popupWindow = document.getElementById("BackgroundDim");
 let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
@@ -41,6 +42,15 @@ const EXPERT = {
     displayWidth: "1760px",
     displayHeight: "1230px",
 }
+const CUSTOM = {
+    name: "Custom",
+    color: "#"+Math.floor(Math.random()*16777215).toString(16),
+    width: undefined,
+    height: undefined,
+    mines: undefined,
+    displayWidth: undefined,
+    displayHeight: undefined,
+}
 let currentDifficulty = null;
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
@@ -57,6 +67,7 @@ function getDifficulty(){
                 if(cookies[i].slice(4) == "BEGGINER"){currentDifficulty = BEGGINER;}
                 if(cookies[i].slice(4) == "INTERMEDIATE"){currentDifficulty = INTERMEDIATE;}
                 if(cookies[i].slice(4) == "EXPERT"){currentDifficulty = EXPERT;}
+                if(cookies[i].slice(4) == "CUSTOM"){currentDifficulty = CUSTOM;}
             }
         }
         
@@ -91,6 +102,51 @@ function getHighScore(){
                 }
             }
         }
+    }
+}
+function cancelCustom(){
+    document.cookie = "dif=BEGGINER;path=/";
+    location.reload();
+}
+function startCustomGame(){
+    let horizontalCellsInput = document.getElementById("HorizontalCellsInput");
+    let verticalCellsInput = document.getElementById("VerticalCellsInput");
+    let minesAmoutInput = document.getElementById("MinesInput");
+    if (horizontalCellsInput.value != "" && Number(horizontalCellsInput.value)>0){
+        currentDifficulty.width = Number(horizontalCellsInput.value);
+    }
+    else{
+        alert("Input the number that is greater than 0 in a first text field");
+        horizontalCellsInput.style.background = "#ffb0b0";
+    }
+
+    if (verticalCellsInput.value != "" && Number(verticalCellsInput.value)>0){
+        currentDifficulty.height = Number(verticalCellsInput.value);
+    }
+    else{
+        alert("Input the number that is greater than 0 in a second text field");
+        verticalCellsInput.style.background = "#ffb0b0";
+    }
+
+    if (minesAmoutInput.value != "" && Number(minesAmoutInput.value)>0){
+        if (Number(minesAmoutInput.value)<(horizontalCellsInput.value * verticalCellsInput.value)){
+            currentDifficulty.mines = Number(minesAmoutInput.value);
+        }
+        else{
+            alert("Amout of mines, can't be more than amout of cells");
+            minesAmoutInput.style.background = "#ffb0b0";
+        }
+    }
+    else{
+        alert("Input the number that is greater than 0 in a third text field");
+        minesAmoutInput.style.background = "#ffb0b0";
+    }
+    if (currentDifficulty.width !== undefined && currentDifficulty.height !== undefined && currentDifficulty.mines !== undefined){
+        popupWindow.remove();
+        currentDifficulty.displayWidth = currentDifficulty.width*57+40 + "px";
+        currentDifficulty.displayHeight = currentDifficulty.height*57+400 + "px";
+        generateMines();
+        document.getElementById("HighScoreButton").remove();
     }
 }
 function showHighScore(t){
@@ -274,6 +330,7 @@ function flagCell(t){
                             else if(currentDifficulty.name == "Extreme"){
                                 document.cookie = "ehs="+timer.innerHTML+";path=/"; // EHS - Extreme level highscore
                             }
+                            else{}
                         }
                     }
                     
@@ -324,7 +381,7 @@ function generateMines(){
     while (minesLocation.length<currentDifficulty.mines){
         temp = Math.floor(Math.random() * (currentDifficulty.height*currentDifficulty.width))+1;
         for (let j=0; j<minesLocation.length; j++){
-            if (temp == minesLocation[j] || temp>(currentDifficulty.height*currentDifficulty.width)){
+            if (temp == minesLocation[j] || temp>(currentDifficulty.height*currentDifficulty.width || temp<1)){
                 //console.log(minesLocation)
                 //minesLocation = [];
                 setTimeout(generateMines, 0);
@@ -527,10 +584,13 @@ function checkSurroundingCells(tempCell){
     }
 }
 getDifficulty();
-generateMines();
-
-getHighScore();
-
+if (currentDifficulty.name != "Custom"){
+    generateMines();
+    getHighScore();
+}
+else{
+    popupWindow.style.display = "flex";
+}
 
 // for(i=1; 100; i++){
 //     let cell = document.getElementById(String(i));

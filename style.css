@@ -38,9 +38,9 @@ body{
 .Icons{
     font-size: 24pt;
 }
-#TopBar{
+/* #TopBar{
 
-}
+} */
 #Status{
     font-size: 32pt;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -86,4 +86,67 @@ legend{
 label{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 400;
+}
+button{
+    border: 0px;
+    border-radius: 3px;
+    background-color: #1a5ca1;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+}
+input[type=number]{
+    border-radius: 5px;
+    border: 0.1px solid #4d7caf;
+    border-bottom: 3px solid #1a5ca1;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: 16pt;
+    text-align: center;
+}
+#BackgroundDim{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.65);
+    /* display: flex; */
+}
+h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+}
+#PopupWindow{
+    padding: 20px;
+    border-radius: 15px;
+    background-color: rgb(248, 248, 248);
+    width: 500px;
+    height: 350px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0px 0px 55px 15px rgba(0,0,0,0.55);
+}
+.InputBox{
+    margin: 10px;
+}
+.PopupLabel{
+    font-size: 14pt;
+}
+.PopupButton{
+    padding: 10px;
+    padding-left: 55px;
+    padding-right: 55px;
+    border-radius: 8px;
+    font-size: 16pt;
+    box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.35);
+    transition: all 0.3s;
+}
+.PopupButton:hover{
+    padding: 10px;
+    padding-left: 55px;
+    padding-right: 55px;
+    border-radius: 8px;
+    font-size: 16pt;
+    box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.85);
 }
