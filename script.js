@@ -217,6 +217,7 @@ function openCell(t){
                             let cell = document.getElementById(i);
                             cell.style.background = "#ffb0b0";
                         }
+                        document.getElementById("favicon").setAttribute("href", "explosion.svg");
                     }
                 }
             }
@@ -376,6 +377,7 @@ function generateField(){
     }
 }
 function generateMines(){
+    let loadingText = document.getElementById("loadingText");
     let temp;
     let retry = false;
     while (minesLocation.length<currentDifficulty.mines){
@@ -383,8 +385,9 @@ function generateMines(){
         for (let j=0; j<minesLocation.length; j++){
             if (temp == minesLocation[j] || temp>(currentDifficulty.height*currentDifficulty.width || temp<1)){
                 //console.log(minesLocation)
-                //minesLocation = [];
+                loadingText.innerHTML= "generating mines..."+minesLocation.length;
                 setTimeout(generateMines, 0);
+
                 retry = true;
             }
         }
@@ -396,7 +399,7 @@ function generateMines(){
         }
     }
     if (minesLocation.length === currentDifficulty.mines){
-        document.getElementById("loadingText").remove();
+        loadingText.remove();
         generateField();
         stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
         //console.log(minesLocation) //uncomment for mines location

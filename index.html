@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.svg">
+    <link id="favicon" rel="icon" href="favicon.svg">
 </head>
 <body id="body">
     <div id="Display">
@@ -34,7 +34,7 @@
             <legend>Settings</legend>
             <div>
                 <input type="checkbox" checked id="OpeningCheckbox" onclick="isOpeningEnabledSwitch(this)">
-                <label>Opening(May be bugs)</label>
+                <label>Opening</label>
             </div>
             <div>
                 <input type="checkbox" checked id="AnimationsCheckbox" onclick="isAnimationsEnabledSwitch(this)">
@@ -68,7 +68,7 @@
                     <input type="number" id="HorizontalCellsInput">
                 </div>
                 <div class="InputBox">
-                    <label class="PopupLabel">Amout of verical cells</label><br>
+                    <label class="PopupLabel">Amout of vertical cells</label><br>
                     <input type="number" id="VerticalCellsInput">
                 </div>
                 <div class="InputBox">
