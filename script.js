@@ -10,6 +10,7 @@ let popupWindow = document.getElementById("BackgroundDim");
 let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
+let animationsEnabled = true;
 let firstClick = true;
 let stopwatch = null;
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
@@ -62,6 +63,7 @@ function difficultyChoosed(t){
 function getDifficulty(){
     if (document.cookie != ""){
         let cookies = document.cookie.split("; ");
+        let failures = 0;
         for (let i=0; i<cookies.length; i++){
             if (cookies[i].slice(0, 3) == "dif"){
                 if(cookies[i].slice(4) == "BEGGINER"){currentDifficulty = BEGGINER;}
@@ -69,15 +71,40 @@ function getDifficulty(){
                 if(cookies[i].slice(4) == "EXPERT"){currentDifficulty = EXPERT;}
                 if(cookies[i].slice(4) == "CUSTOM"){currentDifficulty = CUSTOM;}
             }
+            else{
+                failures++;
+            }
         }
-        
+        if (failures == cookies.length){
+            currentDifficulty = BEGGINER;
+        }
     }
     else{
         currentDifficulty = BEGGINER;
     }
 
 }
-
+function getSettings(){
+    if (document.cookie != ""){
+        let cookies = document.cookie.split("; ");
+        for (let i=0; i<cookies.length; i++){
+            let currentCookie = cookies[i].slice(0, 3);
+            if (currentCookie == "opn"){
+                if(cookies[i].slice(4) == "true"){document.getElementById("OpeningCheckbox").checked = true;}
+                else{document.getElementById("OpeningCheckbox").checked = false; openingEnabled = false;}
+            }
+            if (currentCookie == "dbg"){
+                if(cookies[i].slice(4) == "true"){document.getElementById("BackgroundCheckbox").checked = true;}
+                else{document.getElementById("BackgroundCheckbox").checked = false;}
+            }
+            if (currentCookie == "anm"){
+                if(cookies[i].slice(4) == "true"){document.getElementById("AnimationsCheckbox").checked = true;}
+                else{document.getElementById("AnimationsCheckbox").checked = false; animationsEnabled = false}
+            }
+        }
+        
+    }
+}
 function getHighScore(){
     if (document.cookie != ""){
         let cookies = document.cookie.split("; ");
@@ -103,6 +130,15 @@ function getHighScore(){
             }
         }
     }
+    setTimeout(function(){
+        if (animationsEnabled === false){
+            console.log(true)
+            for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
+                let cell = document.getElementById(String(i));
+                cell.style.transition = "none 0.3s";
+            }
+        }
+    },500)
 }
 function cancelCustom(){
     document.cookie = "dif=BEGGINER;path=/";
@@ -157,32 +193,39 @@ function showHighScore(t){
 function isOpeningEnabledSwitch(t){
     if (t.checked == false){
         openingEnabled = false;
+        document.cookie = "opn=false;path=/"; //OPN - opening
     }
     else{
         openingEnabled = true;
+        document.cookie = "opn=true;path=/"; //OPN - opening
     }
 }
 function isDynamicBackroundEnabledSwitch(t){
     if (t.checked == false){
         lastBgColor = body.style.background;
         body.style.background = "black";
+        document.cookie = "dbg=false;path=/"; //DBG - Dynamic Background
     }
     else{
         body.style.background = lastBgColor;
+        document.cookie = "dbg=true;path=/"; //DBG - Dynamic Background
     }
 }
 function isAnimationsEnabledSwitch(t){
     if (t.checked == false){
-        for(i=1; 100; i++){
+        for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
             let cell = document.getElementById(String(i));
             cell.style.transition = "none 0.3s";
         }
+        document.cookie = "anm=false;path=/"; //ANM - Animations
     }
     else{
-        for(i=1; 100; i++){
+        for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
+            console.log(i)
             let cell = document.getElementById(String(i));
             cell.style.transition = "all 0.3s";
         }
+        document.cookie = "anm=true;path=/"; //ANM - Animations
     }
 }
 function openCell(t){
@@ -375,6 +418,7 @@ function generateField(){
             tableRaw.appendChild(tableCell);
         }
     }
+    getSettings();
 }
 function generateMines(){
     let loadingText = document.getElementById("loadingText");
