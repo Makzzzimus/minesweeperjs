@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper</title>
     <link rel="stylesheet" href="style.css">
-    <link id="favicon" rel="icon" href="favicon.svg">
+    <link id="favicon" rel="icon" href="assets/favicons/favicon.svg">
 </head>
 <body id="body">
     <div id="Display">
@@ -43,6 +43,10 @@
             <div>
                 <input type="checkbox" checked id="BackgroundCheckbox" onclick="isDynamicBackroundEnabledSwitch(this)">
                 <label>Dynamic backround</label>
+            </div>
+            <div>
+                <input type="checkbox" id="MuteCheckbox" onclick="isSoundMutedSwitch(this)">
+                <label>Mute sounds</label>
             </div>
             <button id="HighScoreButton" onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
             <select id="DifficultyMenu" onchange="difficultyChoosed(this)">

@@ -11,10 +11,15 @@ let isOpening = true;
 let isGameOver = false;
 let openingEnabled = true;
 let animationsEnabled = true;
+let soundsEnabled = true;
 let firstClick = true;
 let stopwatch = null;
 const OPENED_CELL_COLOR = "rgb(225, 225, 255)";
 let lastBgColor = "";
+
+let explosionSound = new Audio("assets/sfx/explosion.ogg"); explosionSound.volume = 0.3;
+let digSound = new Audio("assets/sfx/dig.ogg"); digSound.volume = 0.3;
+let flagSound = new Audio("assets/sfx/flag.ogg"); flagSound.volume = 0.3;
 
 const BEGGINER = {
     name: "Begginer",
@@ -23,7 +28,7 @@ const BEGGINER = {
     height: 10,
     mines: 10,
     displayWidth: "620px",
-    displayHeight: "870px",
+    displayHeight: "900px",
 }
 const INTERMEDIATE = {
     name: "Intermediate",
@@ -32,7 +37,7 @@ const INTERMEDIATE = {
     height: 16,
     mines: 40,
     displayWidth: "980px",
-    displayHeight: "1230px",
+    displayHeight: "1236px",
 }
 const EXPERT = {
     name: "Expert",
@@ -41,7 +46,7 @@ const EXPERT = {
     height: 16,
     mines: 99,
     displayWidth: "1760px",
-    displayHeight: "1230px",
+    displayHeight: "1260px",
 }
 const CUSTOM = {
     name: "Custom",
@@ -100,6 +105,10 @@ function getSettings(){
             if (currentCookie == "anm"){
                 if(cookies[i].slice(4) == "true"){document.getElementById("AnimationsCheckbox").checked = true;}
                 else{document.getElementById("AnimationsCheckbox").checked = false; animationsEnabled = false}
+            }
+            if (currentCookie == "snd"){
+                if(cookies[i].slice(4) == "true"){document.getElementById("MuteCheckbox").checked = false;}
+                else{document.getElementById("MuteCheckbox").checked = true; soundsEnabled = false}
             }
         }
         
@@ -211,6 +220,16 @@ function isDynamicBackroundEnabledSwitch(t){
         document.cookie = "dbg=true;path=/"; //DBG - Dynamic Background
     }
 }
+function isSoundMutedSwitch(t){
+    if (t.checked == false){
+        soundsEnabled = true;
+        document.cookie = "snd=true;path=/"; //SND - Sound
+    }
+    else{
+        soundsEnabled = false;
+        document.cookie = "snd=false;path=/"; //DBG - Sound
+    }
+}
 function isAnimationsEnabledSwitch(t){
     if (t.checked == false){
         for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
@@ -260,7 +279,10 @@ function openCell(t){
                             let cell = document.getElementById(i);
                             cell.style.background = "#ffb0b0";
                         }
-                        document.getElementById("favicon").setAttribute("href", "explosion.svg");
+                        document.getElementById("favicon").setAttribute("href", "assets/favicons/explosion.svg");
+                        if (soundsEnabled == true){
+                            explosionSound.play();
+                        }
                     }
                 }
             }
@@ -280,6 +302,9 @@ function openCell(t){
                 }
             }
             if (isGameOver == false){
+                if (soundsEnabled == true){
+                    digSound.play();
+                }
                 if ((t.id % currentDifficulty.width) == 0){ //Is on Right corner
                     onRightCorner = true;
                 }
@@ -349,6 +374,9 @@ function openCell(t){
 function flagCell(t){
     if(isGameOver == false){
         if (t.innerHTML === "⠀" && t.style.background !== OPENED_CELL_COLOR){
+            if (soundsEnabled == true){
+                flagSound.play();
+            }
             t.innerHTML = "🚩";
             flagsLeft.innerHTML = Number(flagsLeft.innerHTML) - 1;
             if (Number(flagsLeft.innerHTML)==0){
