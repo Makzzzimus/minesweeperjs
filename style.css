@@ -83,11 +83,11 @@ legend{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
 }
-label{
+label, p{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 400;
 }
-button{
+button, select{
     border: 0px;
     border-radius: 3px;
     background-color: #1a5ca1;
@@ -122,7 +122,7 @@ h2{
     border-radius: 15px;
     background-color: rgb(248, 248, 248);
     width: 500px;
-    height: 350px;
+    height: 420px;
     margin: auto;
     text-align: center;
     box-shadow: 0px 0px 55px 15px rgba(0,0,0,0.55);

@@ -77,8 +77,9 @@
                 </div>
                 <div class="InputBox">
                     <label class="PopupLabel">Amount of mines</label><br>
-                    <input type="number"id="MinesInput">
+                    <input onblur="calcDensity()" type="number" id="MinesInput">
                 </div>
+                <p>Mine density is:<span id="MineDensity" style="font-weight: 600;"> </span>% <br>(Expert difficulty mine density is 20.5%)</p>
                 <button onclick="startCustomGame()" class="PopupButton">Start!</button><br>
                 <button onclick="cancelCustom()" style="margin-top: 8px; background-color: rgb(235, 235, 235); color: rgb(25, 25, 25); padding-left: 15px; padding-right: 15px;">Cancel</button>
             </div>

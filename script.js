@@ -153,6 +153,14 @@ function cancelCustom(){
     document.cookie = "dif=BEGINNER;path=/";
     location.reload();
 }
+function calcDensity(){
+    console.log(1252)
+    let horizontalCells = Number(document.getElementById("HorizontalCellsInput").value);
+    let verticalCells = Number(document.getElementById("VerticalCellsInput").value);
+    let minesAmount = Number(document.getElementById("MinesInput").value);
+    let mineDensity = document.getElementById("MineDensity");
+    mineDensity.innerHTML = Math.round((100 / ((horizontalCells*verticalCells)/minesAmount))*100)/100;
+}
 function startCustomGame(){
     let horizontalCellsInput = document.getElementById("HorizontalCellsInput");
     let verticalCellsInput = document.getElementById("VerticalCellsInput");
