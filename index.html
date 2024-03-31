@@ -41,17 +41,17 @@
                 <label>Animations</label>
             </div>
             <div>
-                <input type="checkbox" checked id="BackgroundCheckbox" onclick="isDynamicBackroundEnabledSwitch(this)">
-                <label>Dynamic backround</label>
+                <input type="checkbox" checked id="BackgroundCheckbox" onclick="isDynamicBackgroundEnabledSwitch(this)">
+                <label>Dynamic background</label>
             </div>
             <div>
                 <input type="checkbox" id="MuteCheckbox" onclick="isSoundMutedSwitch(this)">
                 <label>Mute sounds</label>
             </div>
-            <button id="HighScoreButton" onclick="showHighScore(this)" style="margin-top: 5px;">Show Highscore</button>
-            <select id="DifficultyMenu" onchange="difficultyChoosed(this)">
+            <button id="HighScoreButton" onclick="showHighScore(this)" style="margin-top: 5px;">Show High-score</button>
+            <select id="DifficultyMenu" onchange="difficultyChosen(this)">
                 <option value="">--Change difficulty--</option>
-                <option value="BEGGINER">Begginer</option>
+                <option value="BEGINNER">Beginner</option>
                 <option value="INTERMEDIATE">Intermediate</option>
                 <option value="EXPERT">Expert</option>
                 <option value="CUSTOM">Custom</option>
@@ -68,15 +68,15 @@
             <h2>Custom difficulty options</h2>
             <div id="PoputContent">
                 <div class="InputBox">
-                    <label class="PopupLabel">Amout of horizontal cells</label><br>
+                    <label class="PopupLabel">Amount of horizontal cells</label><br>
                     <input type="number" id="HorizontalCellsInput">
                 </div>
                 <div class="InputBox">
-                    <label class="PopupLabel">Amout of vertical cells</label><br>
+                    <label class="PopupLabel">Amount of vertical cells</label><br>
                     <input type="number" id="VerticalCellsInput">
                 </div>
                 <div class="InputBox">
-                    <label class="PopupLabel">Amout of mines</label><br>
+                    <label class="PopupLabel">Amount of mines</label><br>
                     <input type="number"id="MinesInput">
                 </div>
                 <button onclick="startCustomGame()" class="PopupButton">Start!</button><br>

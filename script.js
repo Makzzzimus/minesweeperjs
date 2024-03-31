@@ -2,7 +2,7 @@ let minesLocation = [];
 let flagsLeft = document.getElementById("MineCounter");
 let statusBar = document.getElementById("Status");
 let timer = document.getElementById("TimeCounter");
-let highScoreCounterr = document.getElementById("HighScoreCounter");
+let highScoreCounter = document.getElementById("HighScoreCounter");
 let fieldTable = document.getElementById("FieldTable");
 let difficultyBar = document.getElementById("DifficultyBar");
 let display = document.getElementById("Display");
@@ -21,8 +21,8 @@ let explosionSound = new Audio("assets/sfx/explosion.ogg"); explosionSound.volum
 let digSound = new Audio("assets/sfx/dig.ogg"); digSound.volume = 0.3;
 let flagSound = new Audio("assets/sfx/flag.ogg"); flagSound.volume = 0.3;
 
-const BEGGINER = {
-    name: "Begginer",
+const BEGINNER = {
+    name: "Beginner",
     color: "green",
     width: 10,
     height: 10,
@@ -61,7 +61,7 @@ let currentDifficulty = null;
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
-function difficultyChoosed(t){
+function difficultyChosen(t){
     document.cookie = "dif="+t.value+";path=/";
     location.reload();
 }
@@ -71,7 +71,7 @@ function getDifficulty(){
         let failures = 0;
         for (let i=0; i<cookies.length; i++){
             if (cookies[i].slice(0, 3) == "dif"){
-                if(cookies[i].slice(4) == "BEGGINER"){currentDifficulty = BEGGINER;}
+                if(cookies[i].slice(4) == "BEGINNER"){currentDifficulty = BEGINNER;}
                 if(cookies[i].slice(4) == "INTERMEDIATE"){currentDifficulty = INTERMEDIATE;}
                 if(cookies[i].slice(4) == "EXPERT"){currentDifficulty = EXPERT;}
                 if(cookies[i].slice(4) == "CUSTOM"){currentDifficulty = CUSTOM;}
@@ -81,11 +81,11 @@ function getDifficulty(){
             }
         }
         if (failures == cookies.length){
-            currentDifficulty = BEGGINER;
+            currentDifficulty = BEGINNER;
         }
     }
     else{
-        currentDifficulty = BEGGINER;
+        currentDifficulty = BEGINNER;
     }
 
 }
@@ -117,31 +117,31 @@ function getSettings(){
 function getHighScore(){
     if (document.cookie != ""){
         let cookies = document.cookie.split("; ");
-        if (currentDifficulty.name == "Begginer"){
+        if (currentDifficulty.name == "Beginner"){
             for (let i=0; i<cookies.length; i++){
                 if (cookies[i].slice(0, 3) == "bhs"){
-                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                    highScoreCounter.innerHTML = cookies[i].slice(4);
                 }
             }
         }
         if (currentDifficulty.name == "Intermediate"){
             for (let i=0; i<cookies.length; i++){
                 if (cookies[i].slice(0, 3) == "ihs"){
-                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                    highScoreCounter.innerHTML = cookies[i].slice(4);
                 }
             }
         }
         if (currentDifficulty.name == "Expert"){
             for (let i=0; i<cookies.length; i++){
                 if (cookies[i].slice(0, 3) == "ehs"){
-                    highScoreCounterr.innerHTML = cookies[i].slice(4);
+                    highScoreCounter.innerHTML = cookies[i].slice(4);
                 }
             }
         }
     }
     setTimeout(function(){
         if (animationsEnabled === false){
-            console.log(true)
+            //console.log(true)
             for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
                 let cell = document.getElementById(String(i));
                 cell.style.transition = "none 0.3s";
@@ -150,13 +150,13 @@ function getHighScore(){
     },500)
 }
 function cancelCustom(){
-    document.cookie = "dif=BEGGINER;path=/";
+    document.cookie = "dif=BEGINNER;path=/";
     location.reload();
 }
 function startCustomGame(){
     let horizontalCellsInput = document.getElementById("HorizontalCellsInput");
     let verticalCellsInput = document.getElementById("VerticalCellsInput");
-    let minesAmoutInput = document.getElementById("MinesInput");
+    let minesAmountInput = document.getElementById("MinesInput");
     if (horizontalCellsInput.value != "" && Number(horizontalCellsInput.value)>0){
         currentDifficulty.width = Number(horizontalCellsInput.value);
     }
@@ -173,18 +173,18 @@ function startCustomGame(){
         verticalCellsInput.style.background = "#ffb0b0";
     }
 
-    if (minesAmoutInput.value != "" && Number(minesAmoutInput.value)>0){
-        if (Number(minesAmoutInput.value)<(horizontalCellsInput.value * verticalCellsInput.value)){
-            currentDifficulty.mines = Number(minesAmoutInput.value);
+    if (minesAmountInput.value != "" && Number(minesAmountInput.value)>0){
+        if (Number(minesAmountInput.value)<(horizontalCellsInput.value * verticalCellsInput.value)){
+            currentDifficulty.mines = Number(minesAmountInput.value);
         }
         else{
-            alert("Amout of mines, can't be more than amout of cells");
-            minesAmoutInput.style.background = "#ffb0b0";
+            alert("Amount of mines, can't be more than amount of cells");
+            minesAmountInput.style.background = "#ffb0b0";
         }
     }
     else{
         alert("Input the number that is greater than 0 in a third text field");
-        minesAmoutInput.style.background = "#ffb0b0";
+        minesAmountInput.style.background = "#ffb0b0";
     }
     if (currentDifficulty.width !== undefined && currentDifficulty.height !== undefined && currentDifficulty.mines !== undefined){
         popupWindow.remove();
@@ -209,7 +209,7 @@ function isOpeningEnabledSwitch(t){
         document.cookie = "opn=true;path=/"; //OPN - opening
     }
 }
-function isDynamicBackroundEnabledSwitch(t){
+function isDynamicBackgroundEnabledSwitch(t){
     if (t.checked == false){
         lastBgColor = body.style.background;
         body.style.background = "black";
@@ -227,7 +227,7 @@ function isSoundMutedSwitch(t){
     }
     else{
         soundsEnabled = false;
-        document.cookie = "snd=false;path=/"; //DBG - Sound
+        document.cookie = "snd=false;path=/"; //SND - Sound
     }
 }
 function isAnimationsEnabledSwitch(t){
@@ -240,7 +240,7 @@ function isAnimationsEnabledSwitch(t){
     }
     else{
         for(i=1; i<(currentDifficulty.width * currentDifficulty.height+1); i++){
-            console.log(i)
+            //console.log(i)
             let cell = document.getElementById(String(i));
             cell.style.transition = "all 0.3s";
         }
@@ -391,10 +391,10 @@ function flagCell(t){
                     statusBar.innerHTML = "You Won!";
                     isGameOver = true;
                     statusBar.style.fontWeight = "700";
-                    if (highScoreCounterr.innerHTML != ""){
-                        if(Number(timer.innerHTML) < Number(highScoreCounterr.innerHTML)){
-                            if (currentDifficulty.name == "Begginer"){
-                                document.cookie = "bhs="+timer.innerHTML+";path=/"; // BHS - begginer level highscore
+                    if (highScoreCounter.innerHTML != ""){
+                        if(Number(timer.innerHTML) < Number(highScoreCounter.innerHTML)){
+                            if (currentDifficulty.name == "Beginner"){
+                                document.cookie = "bhs="+timer.innerHTML+";path=/"; // BHS - beginner level highscore
                             }
                             else if(currentDifficulty.name == "Intermediate"){
                                 document.cookie = "ihs="+timer.innerHTML+";path=/"; // IHS - Intermediate level highscore
@@ -482,7 +482,7 @@ function opening(t){
     let emptyCellsArray = [];
     let tempCell = t;
     
-    try{console.log(tempCell.id);}catch{}
+    //try{console.log(tempCell.id);}catch{}
     let onLeftBoundary = false;
     let onRightBoundary = false;
     // let onUpperBoundary = true;
@@ -574,7 +574,7 @@ function opening(t){
                 }
             }catch{}
         }
-        console.log(emptyCellsArray.length+" emptyCellsArray.length")
+        //console.log(emptyCellsArray.length+" emptyCellsArray.length")
         for (let i=0; i<emptyCellsArray.length; i++){
             setTimeout(function(){opening(emptyCellsArray[i])}, 15)
         }
