@@ -9,6 +9,7 @@
 </head>
 <body id="body">
     <div id="Display">
+        <p id="Tip" style="margin: 0; font-size: 12pt; color:rgb(140, 140, 140)" >Tip: Click on <span style="font-weight: 800;" id="TipDifficulty"></span>, to restart the game</p>
         <div id="TopBar">
             <div id="MinesLayer" class="BottomLayer">
                 <span class="Icons">💣</span>
@@ -21,7 +22,7 @@
                 <span class="Icons">⏱</span>
                 <span id="TimeCounter" class="Counters">0</span>
             </div>
-            <p id="DifficultyBar" style="font-size: 18pt; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></p>
+            <p id="DifficultyBar" onpointerenter="showRestartButton(this)" onpointerleave="returnDifficulty(this)" onclick="reloadPage()" style="font-size: 18pt; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></p>
         </div>
         
         <div id="Field">
@@ -84,6 +85,7 @@
                 <button onclick="cancelCustom()" style="margin-top: 8px; background-color: rgb(235, 235, 235); color: rgb(25, 25, 25); padding-left: 15px; padding-right: 15px;">Cancel</button>
             </div>
         </div>
+        
     </div>
     <script src="script.js"></script>
     <script src="bgcollist.js"></script>

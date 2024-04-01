@@ -28,7 +28,7 @@ const BEGINNER = {
     height: 10,
     mines: 10,
     displayWidth: "620px",
-    displayHeight: "900px",
+    displayHeight: "920px",
 }
 const INTERMEDIATE = {
     name: "Intermediate",
@@ -37,7 +37,7 @@ const INTERMEDIATE = {
     height: 16,
     mines: 40,
     displayWidth: "980px",
-    displayHeight: "1236px",
+    displayHeight: "1260px",
 }
 const EXPERT = {
     name: "Expert",
@@ -207,6 +207,17 @@ function showHighScore(t){
     display.style.height = Number(display.style.height.slice(0, -2)) + 50 + "px";
     document.getElementById("HighScoreLayer").style.display = "";
 }
+function showRestartButton(t){
+    t.innerHTML = "Click to restart game";
+    t.style.color = "rgb(0,0,0)";
+}
+function returnDifficulty(t){
+    t.innerHTML = currentDifficulty.name;
+    t.style.color = currentDifficulty.color;
+}
+function reloadPage(){
+    location.reload();
+}
 function isOpeningEnabledSwitch(t){
     if (t.checked == false){
         openingEnabled = false;
@@ -296,6 +307,7 @@ function openCell(t){
             }
             else{
                 firstClick = false;
+                stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
                 for (let i=0; i<currentDifficulty.mines; i++){
                     if (t.id == minesLocation[i]){
                         //console.log("first clicked cell was mined");
@@ -454,6 +466,7 @@ function generateField(){
             tableRaw.appendChild(tableCell);
         }
     }
+    document.getElementById("TipDifficulty").innerHTML = currentDifficulty.name;
     getSettings();
 }
 function generateMines(){
@@ -481,7 +494,6 @@ function generateMines(){
     if (minesLocation.length === currentDifficulty.mines){
         loadingText.remove();
         generateField();
-        stopwatch = setInterval(()=>{timer.innerHTML = Number(timer.innerHTML)+1;}, 1000);
         //console.log(minesLocation) //uncomment for mines location
     }
 }
@@ -674,7 +686,7 @@ if (currentDifficulty.name != "Custom"){
 else{
     popupWindow.style.display = "flex";
 }
-
+setTimeout(function(){document.getElementById("Tip").style.opacity = 0;},6000);
 // for(i=1; 100; i++){
 //     let cell = document.getElementById(String(i));
 //     cell.style.opacity = "1";
